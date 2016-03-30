@@ -1,0 +1,5 @@
+cube.txt 3800 0 13000 0
+cube2.txt 4000 0 13000 0
+cube2.txt 4060 0 13000 0
+cube2.txt 4120 0 13000 0
+endOfObjects

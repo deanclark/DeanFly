@@ -1,0 +1,8 @@
+digraph "siteCrystal.SiteCrystal"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{siteCrystal.SiteCrystal\n|+ textFieldURL\l+ choiceType\l+ panelMain\l+ listMatches\l+ SEARCH_STATE_IDLE\l+ SEARCH_STATE_SEARCHING\l+ SEARCH_STATE_STOPPING\l+ UNKNOWN\l+ ALLOWED\l+ DENIDED\land 6 more...\l+ comboBoxTextURL\l+ buttonSearch\l+ buttonStop\l+ labelStatus\l+ strURL\l+ numberSearched\l+ numberFound\l+ SEARCH\l+ STOP\l+ DISALLOW\l+ domainNameHostingSiteCrystal\lService\l+ archiveFolder\l+ standaloneApplicationMode\l~ logFilename\l~ sitmapFilename\l~ excludeFilenames\l~ includeFilenames\l~ localArchiveCacheFolder\l~ statusInet\l~ tempProxy\l|+ SiteCrystal()\l+ init()\l+ start()\l+ stop()\l+ robotSafe()\l+ paint()\l+ loadSearchStrings()\l+ run()\l+ atLeastOneOtherThreadIsSearching()\l+ getThisTreadIndex()\l+ actionPerformed()\l+ printDebug()\l+ setStatus()\l+ main()\l~ logToSitemapLocal()\l~ logToFile()\l~ logToXml()\l~ importTextToXmlRows()\l}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +xmlFileObject" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{siteCrystal.XmlExporter\n|+ xmlFilename\l|+ XmlExporter()\l~ setXmlFilename()\l~ createXmlHeader()\l~ writeXmlRowToFile()\l~ writeXmlWorksheetHeader()\l~ writeXmlWorksheetOptions()\l~ writeXmlWorksheetFooter()\l~ writeXmlTableHeader()\l~ writeXmlTableFooter()\l~ createXmlFooter()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsiteCrystal_1_1XmlExporter.html"];
+}

@@ -1,0 +1,188 @@
+
+
+\begin{DoxyVersion}{Version}
+Draft site\+Crystal 01.\+00.\+00.\+01 (05-\/\+March-\/2010)
+\end{DoxyVersion}
+\hypertarget{index_sec_1}{}\section{1. 	\+I\+N\+T\+R\+O\+D\+U\+C\+T\+I\+O\+N}\label{index_sec_1}
+This document describes the User Interfaces of the Site Crystal Tool.\hypertarget{index_sec_1_1}{}\subsection{1.\+1	\+O\+V\+E\+R\+V\+I\+E\+W}\label{index_sec_1_1}
+\begin{DoxyVerb}The SiteCrystal Tool has been implemented to search a customers web site for known text
+and phrases that should be avoided.  
+
+This tool is intended for use on a subscription basis and checks are made at run time to 
+ensure subscription is active.  If subscription can not be determined the tool will revert
+to a demonstration mode. 
+
+A stand-alone and Web based interface is available, for the configuration of the search tool.
+Customer login is required for both the full and demonstrator search.  This requirement is 
+necessary to prevent the tool from being used to for malicious purposes.  E-mail confirmation 
+during the registration process will restrict a user account to search the domain matching 
+their e-mail domain.  For example: user with e-mail John.Smith@smith.com will be restricted 
+to searching a site within the smith.com domain.
+
+Due to the nature of this tool, a scan is scheduled rather than executed immediately.  This allows the
+software to limit the amount of Internet traffic targeted at the customer site to prevent performance 
+impact during the scan.
+
+Once scheduled the scan will be executed on one of our remote servers.  This allows you to continue 
+working without impacting your PC performance while the scan is executed.
+
+You will receive an e-mail notification when the scan is complete.
+Within this email you will find a link back to our website where you will be able to login and view the scan results.
+
+Scan results will be of the following form
+
+[ Allow/Ignore ] [link to page] [Phrase found] [Abstract of text] [Checksum]
+\end{DoxyVerb}
+
+
+ Figure 1.\+1.\+0 Screen Shot
+
+Requirements\+:
+\begin{DoxyEnumerate}
+\item Customer login is required for both the full and demonstrator search.
+\item Restrict user account to search the domain matching their e-\/mail domain.
+\item Additional domains can be registered only if e-\/mail confirmation from the request domain is received.
+\item Failed authentication via site\+Crystal.\+com will restrict search to demo domain only.
+\end{DoxyEnumerate}\hypertarget{index_sec_1_2}{}\subsection{1.\+2 G\+U\+I\+D\+E T\+O T\+H\+E D\+O\+C\+U\+M\+E\+N\+T}\label{index_sec_1_2}
+\begin{DoxyVerb}This document is designed to be formatted as a html document for viewing through
+a web browser. It is automatically generated using doxygen.
+
+It is intended for use by developers and customers to tune the tools options.
+
+This document is split into several sections, there is manually generated sections
+and several automatically generated sections that detail the methods available.
+\end{DoxyVerb}
+\hypertarget{index_sec_1_3}{}\subsection{1.\+3	\+A\+S\+S\+U\+M\+P\+T\+I\+O\+N\+S}\label{index_sec_1_3}
+\begin{DoxyVerb}Not applicable
+\end{DoxyVerb}
+\hypertarget{index_sec_2}{}\section{2.	\+R\+E\+Q\+U\+I\+R\+E\+M\+E\+N\+T\+S M\+A\+P\+P\+I\+N\+G}\label{index_sec_2}
+The requirements for site\+Crystal are mapped to the L\+L\+D in the site\+Crystal\+L\+L\+D.\hypertarget{index_sec_3}{}\section{3.	\+L\+O\+W L\+E\+V\+E\+L D\+E\+S\+I\+G\+N O\+V\+E\+R\+V\+I\+E\+W}\label{index_sec_3}
+\hypertarget{index_sec_3_1}{}\subsection{3.\+1	\+D\+E\+S\+C\+R\+I\+P\+T\+I\+O\+N}\label{index_sec_3_1}
+\begin{DoxyVerb}The siteCrystal is responsible for crawling a website and extracting a list of linked URLs where a word or phase is found.
+
+Search methods,
+
+    1. Web based scan scheduler 
+    2. Standalone application (Site Admin Only)
+\end{DoxyVerb}
+
+
+
+\begin{DoxyCode}
+User Interface Panel to be included in ta application or applet.
+Database - customer
+\end{DoxyCode}
+
+
+ Figure 1.\+1.\+1 Database diagram\hypertarget{index_sec_3_2}{}\subsection{3.\+2	\+D\+I\+S\+A\+B\+L\+I\+N\+G S\+T\+R\+A\+T\+E\+G\+Y}\label{index_sec_3_2}
+\begin{DoxyVerb}There are no disabling requirements for the siteCrystal.
+\end{DoxyVerb}
+\hypertarget{index_sec_3_3}{}\subsection{3.\+3	\+L\+O\+G\+G\+I\+N\+G S\+T\+R\+A\+T\+E\+G\+Y}\label{index_sec_3_3}
+\begin{DoxyVerb}There are no logging requirements for the siteCrystal.
+\end{DoxyVerb}
+\hypertarget{index_sec_4}{}\section{4.	\+S\+E\+C\+U\+R\+I\+T\+Y}\label{index_sec_4}
+\begin{DoxyVerb}There are no security aspects specific to the siteCrystal.
+\end{DoxyVerb}
+\hypertarget{index_sec_5}{}\section{5.	\+I\+N\+T\+E\+R\+A\+C\+T\+I\+O\+N\+S A\+N\+D D\+E\+P\+E\+N\+D\+E\+N\+C\+I\+E\+S}\label{index_sec_5}
+\begin{DoxyVerb}The siteCrystal connects to the Customers Web Server to analyse the site,
+to use the siteCrystal the site needs to be up and running.
+
+@note The siteCrystal automatically sends status reports and results to the parent website.
+\end{DoxyVerb}
+\hypertarget{index_sec_5_1}{}\subsection{5.\+1	\+I\+N\+T\+E\+R\+A\+C\+T\+I\+O\+N\+S W\+I\+T\+H A\+N\+D D\+E\+P\+E\+N\+D\+E\+N\+C\+I\+E\+S O\+N T\+H\+E E\+X\+I\+S\+T\+I\+N\+G S\+Y\+S\+T\+E\+M}\label{index_sec_5_1}
+\begin{DoxyVerb}The siteCrystal has no interaction or dependency on existing systems.
+\end{DoxyVerb}
+\hypertarget{index_sec_5_2}{}\subsection{5.\+2	\+I\+N\+T\+E\+R\+A\+C\+T\+I\+O\+N\+S W\+I\+T\+H A\+N\+D D\+E\+P\+E\+N\+D\+E\+N\+C\+I\+E\+S O\+N N\+E\+W F\+E\+A\+T\+U\+R\+E\+S}\label{index_sec_5_2}
+\begin{DoxyVerb}As this is a new development there are no specific new features that have any interactions or
+dependencies with siteCrystal.
+\end{DoxyVerb}
+\hypertarget{index_sec_6}{}\section{6.	\+D\+E\+S\+I\+G\+N A\+L\+T\+E\+R\+N\+A\+T\+I\+V\+E\+S A\+N\+D D\+E\+C\+I\+S\+I\+O\+N\+S}\label{index_sec_6}
+\begin{DoxyVerb}Not applicable
+\end{DoxyVerb}
+\hypertarget{index_sec_7}{}\section{7.	\+R\+E\+T\+R\+O\+F\+I\+T, B\+A\+C\+K\+W\+A\+R\+D C\+O\+M\+P\+A\+T\+I\+B\+I\+L\+I\+T\+Y, A\+N\+D I\+N\+T\+E\+R\+O\+P\+E\+R\+A\+B\+I\+L\+I\+T\+Y}\label{index_sec_7}
+\hypertarget{index_sec_7_1}{}\subsection{7.\+1	\+R\+E\+T\+R\+O\+F\+I\+T}\label{index_sec_7_1}
+\begin{DoxyVerb}Not applicable
+\end{DoxyVerb}
+\hypertarget{index_sec_7_2}{}\subsection{7.\+2	\+B\+A\+C\+K\+W\+A\+R\+D C\+O\+M\+P\+A\+T\+I\+B\+I\+L\+I\+T\+Y}\label{index_sec_7_2}
+\begin{DoxyVerb}Not applicable.
+\end{DoxyVerb}
+\hypertarget{index_sec_7_3}{}\subsection{7.\+3	\+I\+N\+T\+E\+R\+O\+P\+E\+R\+A\+B\+I\+L\+I\+T\+Y}\label{index_sec_7_3}
+\begin{DoxyVerb}Not applicable.
+\end{DoxyVerb}
+\hypertarget{index_sec_8}{}\section{8.	\+S\+Y\+S\+T\+E\+M R\+E\+S\+O\+U\+R\+C\+E\+S, P\+E\+R\+F\+O\+R\+M\+A\+N\+C\+E, A\+N\+D C\+A\+P\+A\+C\+I\+T\+I\+E\+S}\label{index_sec_8}
+\begin{DoxyVerb}Performance can be impacted by the following.
+- PC Specification and Performance.
+- Web Server Specification and Performance
+- Internet Connection Speed/Limitations
+\end{DoxyVerb}
+\hypertarget{index_sec_8_1}{}\subsection{8.\+1	\+S\+Y\+S\+T\+E\+M R\+E\+S\+O\+U\+R\+C\+E U\+S\+A\+G\+E}\label{index_sec_8_1}
+\begin{DoxyVerb}Methods can be run simultaneously so could cause substantial impact to loacl PC and 
+Web Server performance, so use of this tool should be restricted to outside of business 
+hours..
+\end{DoxyVerb}
+\hypertarget{index_sec_8_2}{}\subsection{8.\+2	\+L\+I\+M\+I\+T\+A\+T\+I\+O\+N\+S}\label{index_sec_8_2}
+\begin{DoxyVerb}ToDo
+\end{DoxyVerb}
+\hypertarget{index_sec_8_3}{}\subsection{8.\+3	\+E\+X\+P\+A\+N\+S\+I\+O\+N C\+O\+N\+S\+I\+D\+E\+R\+A\+T\+I\+O\+N\+S}\label{index_sec_8_3}
+\begin{DoxyVerb}New methods can be easily added due to the modular nature.
+\end{DoxyVerb}
+\hypertarget{index_sec_9}{}\section{9.	\+R\+E\+L\+I\+A\+B\+I\+L\+I\+T\+Y}\label{index_sec_9}
+\begin{DoxyVerb}The methods have been design to incorporate a standard interface to allow the 
+reporting of failures during test.
+
+It is the responsibility of the test developer to ensure this mechanism is implemented,
+to allow corrective action at the earliest opportunity. 
+\end{DoxyVerb}
+\hypertarget{index_sec_10}{}\section{10.	\+U\+S\+E\+R P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E A\+N\+D C\+U\+S\+T\+O\+M\+E\+R I\+M\+P\+A\+C\+T}\label{index_sec_10}
+\begin{DoxyVerb}Not applicable.
+\end{DoxyVerb}
+\hypertarget{index_sec_10_1}{}\subsection{10.\+1	\+S\+E\+R\+V\+I\+C\+E P\+R\+O\+V\+I\+D\+E\+R}\label{index_sec_10_1}
+\begin{DoxyVerb}Not applicable.
+\end{DoxyVerb}
+\hypertarget{index_sec_10_2}{}\subsection{10.\+2	\+S\+U\+B\+S\+C\+R\+I\+B\+E\+R}\label{index_sec_10_2}
+\begin{DoxyVerb}The siteCrystal connects to the Crystalwink web site in order to verify subscriber details.  Firewall and Proxy Server details must be made available to the tool.
+
+    - Subscriber Customisation Information
+
+@note The test developer can utilise locally stored files rather than web based files inorder to reduce network traffic during debug and development.
+\end{DoxyVerb}
+\hypertarget{index_sec_11}{}\section{11.	\+D\+E\+T\+A\+I\+L\+E\+D D\+E\+S\+I\+G\+N}\label{index_sec_11}
+\hypertarget{index_sec_11_1}{}\subsection{11.\+1	\+O\+V\+E\+R\+V\+I\+E\+W}\label{index_sec_11_1}
+\begin{DoxyVerb}ToDo
+\end{DoxyVerb}
+\hypertarget{index_sec_11_2}{}\subsection{11.\+2	\+S\+U\+B\+S\+Y\+S\+T\+E\+M I\+N\+I\+T\+I\+A\+L\+I\+S\+A\+T\+I\+O\+N}\label{index_sec_11_2}
+\begin{DoxyVerb}siteCrystal is a dynamic object and as such needs specific initialisation either from customer configuration files or default demonstrator files.
+\end{DoxyVerb}
+\hypertarget{index_sec_11_3}{}\subsection{11.\+3	\+S\+U\+B\+S\+Y\+S\+T\+E\+M I\+N\+T\+E\+R\+F\+A\+C\+E}\label{index_sec_11_3}
+\begin{DoxyVerb}siteCrystal does not expose any interfaces.
+\end{DoxyVerb}
+\hypertarget{index_sec_12}{}\section{12.	\+S\+C\+E\+N\+A\+R\+I\+O\+S}\label{index_sec_12}
+\begin{DoxyVerb}ToDo
+\end{DoxyVerb}
+\hypertarget{index_sec_13}{}\section{13.	\+T\+E\+S\+T C\+O\+N\+S\+I\+D\+E\+R\+A\+T\+I\+O\+N\+S}\label{index_sec_13}
+\hypertarget{index_sec_13_1}{}\subsection{13.\+1	\+L\+A\+B A\+N\+D T\+O\+O\+L N\+E\+E\+D\+S}\label{index_sec_13_1}
+\begin{DoxyVerb}ToDo
+\end{DoxyVerb}
+\hypertarget{index_sec_13_2}{}\subsection{13.\+2	\+I\+N\+T\+E\+G\+R\+A\+T\+I\+O\+N P\+L\+A\+N\+N\+I\+N\+G}\label{index_sec_13_2}
+\begin{DoxyVerb}Integration testing is performed on a known web site to ensure each method acts as stated in this document.
+\end{DoxyVerb}
+\hypertarget{index_sec_13_3}{}\subsection{13.\+3	\+S\+T\+R\+E\+S\+S T\+E\+S\+T\+I\+N\+G}\label{index_sec_13_3}
+\begin{DoxyVerb}Not applicable.
+\end{DoxyVerb}
+\hypertarget{index_sec_13_4}{}\subsection{13.\+4	\+S\+E\+C\+U\+R\+I\+T\+Y T\+E\+S\+T\+I\+N\+G}\label{index_sec_13_4}
+\begin{DoxyVerb}Not applicable.
+\end{DoxyVerb}
+\hypertarget{index_sec_13_5}{}\subsection{13.\+5	\+A\+D\+V\+E\+R\+S\+A\+R\+I\+A\+L T\+E\+S\+T\+I\+N\+G}\label{index_sec_13_5}
+\begin{DoxyVerb}Not applicable.
+\end{DoxyVerb}
+\hypertarget{index_sec_14}{}\section{14.	\+C\+R\+Y\+S\+T\+A\+L\+W\+I\+N\+K P\+R\+A\+C\+T\+I\+C\+E C\+O\+N\+S\+I\+D\+E\+R\+A\+T\+I\+O\+N\+S}\label{index_sec_14}
+\begin{DoxyVerb}There are not specific practice considerations.
+\end{DoxyVerb}
+\hypertarget{index_sec_15}{}\section{15.	\+A\+S\+S\+E\+S\+S\+M\+E\+N\+T O\+F D\+E\+S\+I\+G\+N}\label{index_sec_15}
+\hypertarget{index_sec_15_1}{}\subsection{15.\+1	$<$\+S\+U\+B\+J\+E\+C\+T$>$}\label{index_sec_15_1}
+\hypertarget{index_sec_15_1_1}{}\subsection{15.\+1.\+1	\+Comparison with Existing Functionality}\label{index_sec_15_1_1}
+\begin{DoxyVerb}Not applicable.
+\end{DoxyVerb}
+\hypertarget{index_sec_15_1_2}{}\subsection{15.\+1.\+2	\+Use}\label{index_sec_15_1_2}
+\begin{DoxyVerb}Not applicable.\end{DoxyVerb}
+ 

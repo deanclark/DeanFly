@@ -1,0 +1,9 @@
+#
+#Walker startX startY startZ height orientationDeg
+#AirCraft startX startY startZ Roll Pitch Yaw maxSpeed
+#Car startX startY startZ orientationDeg MaxSpeed
+#
+Walker 3850 0 2600 220 0
+Walker 3500 0 4000 220 0
+AirCraft 2000 60 5000 0 0 0 1000
+endOfFile

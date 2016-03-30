@@ -1,0 +1,285 @@
+
+
+/**
+
+@image html "logo.jpg"
+@mainpage DeanFly Simulator - User Documentation 
+
+@version
+Draft DeanFly Simulator 01.00.00.02 (02-June-2014) 
+
+
+@section sec_1		1. 	Introduction
+	This document describes the User Interfaces of the DeanFly Simulator.
+
+
+@subsection sec_1_1	1.1	Overview
+
+	The DeanFly Simulator has been implemented to demonstrate the terms used with the simulator comunity.
+	
+	This tool is intended for use by students studying 3D Computer Graphics. 
+	
+
+
+@image html AppScreenShot.gif
+                    Figure 1.1.0 Screen Shot (IslandWorld)
+
+@image html CubeWorldView1.gif
+                    Figure 1.2.0 Screen Shot (CubeWorld)
+
+    
+            
+ 
+
+Requirements:
+1.  
+2.  
+3.  
+4.  	
+
+
+@subsection sec_1_2	1.2 Guide to the Document
+
+	This document is designed to be formatted as a html document for viewing via
+	a web browser. It is automatically generated using Doxygen.
+	
+	It is intended for use by developers and users as a user guide.  JavaDoc is used for all developer documention.
+
+	This document is split into several sections, these are manually generated sections
+	and several automatically generated sections that detail the methods available.
+
+
+@subsection sec_1_3	1.3	Assumptions
+
+	Not applicable
+
+
+@section sec_2		2.	Requirements Mapping
+	The requirements for DeanFly Simulator are mapped to the LLD in the DeanFly SimulatorLLD.
+
+	
+@section sec_3		3.	Low Level Design Overview
+@subsection sec_3_1	3.1	Description
+
+	The aim of the DeanFly Simulator is to provide a simple means of visually seeing the impact
+	of various techniqes used with in 3D Graphics to improve the perception of 3D within the 
+	constrains of a 2d display..
+	
+	Usage,
+	
+		1. Web based applet 
+		2. Standalone application
+		
+@code
+    User Interface Panel to be included in the application or applet.
+    
+@endcode	
+
+@subsection sec_3_2	3.2	Disabling Strategy
+	
+	There are no disabling requirements for the DeanFly Simulator.
+
+
+@subsection sec_3_3	3.3	Logging Strategy
+	
+	There are no logging requirements for the DeanFly Simulator.
+
+
+@section sec_4		4.	Security
+	
+	There are no security aspects specific to the DeanFly Simulator.
+
+
+@section sec_5		5.	Interactions and dependencies
+
+	The DeanFly Simulator connects to the a Web Server to obtain 3D model files for rendering.
+	To use this feature of the DeanFly Simulator the site needs to be up and running.
+	
+	@note The DeanFly Simulator automatically sends usage and status reports to the parent website.
+
+	
+@subsection sec_5_1	5.1	Interactions with, and Dependencies on the Existing Systems
+	
+	The DeanFly Simulator has no interaction or dependency on existing systems.
+
+	
+@subsection sec_5_2	5.2	Interactions with, and Dependencies on new features
+	
+	As this is a new development there are no specific new features that have any interactions or
+	dependencies with DeanFly Simulator.
+
+
+@section sec_6		6.	Design Alternatives and Decisions
+
+	Not applicable
+
+
+@section sec_7		7.	Retrofit, Backward Compatibility and Interoperability
+@subsection sec_7_1	7.1	Retrofit
+
+	Not applicable
+
+	
+@subsection sec_7_2	7.2	Backward Compatibility 
+
+	Not applicable.
+
+
+@subsection sec_7_3	7.3	Interoperability
+
+	Not applicable.
+
+
+@section sec_8		8.	System Resources, Performance and Capabilities
+
+	Performance can be impacted by the following.
+	- PC Specification and Performance.
+	- Web Server Specification and Performance
+	- Internet Connection Speed/Limitations
+	
+
+@subsection sec_8_1	8.1	System Resource Usage
+
+	Methods can be run simultaneously so could cause substantial impact to loacl PC and 
+	Web Server performance, so use of this tool should be restricted to outside of business 
+	hours..
+
+
+@subsection sec_8_2	8.2	Limitations
+
+	TODO
+	
+	
+@subsection sec_8_3	8.3	Expansion Considerations
+
+	New methods can be easily added due to the modular nature.
+
+
+@section sec_9		9.	Reliability
+
+	The methods have been design to incorporate a standard interface to allow the 
+	reporting of failures during test.
+	
+	It is the responsibility of the test developer to ensure this mechanism is implemented,
+	to allow corrective action at the earliest opportunity. 
+	
+
+@section sec_10		10.	User Perspective and Customer Impact
+
+	Not applicable.
+	
+	
+@subsection sec_10_1	10.1	Service Provider
+	
+	Not applicable.
+
+
+@subsection sec_10_2	10.2	Subscriber
+	
+	The DeanFly Simulator connects to a web site in order to obtain object definition files.  
+	Firewall and Proxy Server details must be made available to the tool.
+	
+		- Subscriber Customisation Information
+		
+	@note The test developer can utilise locally stored files rather than web based files in order to
+	reduce network traffic during debug and development.
+
+
+@section sec_11		11.	Detailed Design
+@subsection sec_11_1	11.1	Overview
+
+	ToDo
+
+@subsection sec_11_2	11.2	Subsystem Initialisation
+
+	DeanFly Simulator is a dynamic object and as such needs specific initialisation either from configuration files or default demonstrator files.
+	
+
+@subsection sec_11_3	11.3	Subsystem Interface
+
+	DeanFly Simulator does not expose any interfaces.
+
+
+@section sec_12		12.	Scenarios
+
+	ToDo
+
+
+@section sec_13		13.	Test Considerations
+@subsection sec_13_1	13.1	Lab and Tool Requirements
+	
+	ToDo
+	
+
+@subsection sec_13_2	13.2	Integration Planning
+
+	Integration testing is performed on a known web site to ensure each method acts as stated in this document.
+
+
+@subsection sec_13_3	13.3	Stress Testing
+	
+	Not applicable.
+	
+	
+@subsection sec_13_4	13.4	Security Testing
+
+	Not applicable.
+
+
+@subsection sec_13_5	13.5	Adversarial Testing
+
+	Not applicable.
+
+
+@section sec_14		14.	Crystalwink Practice Considerations
+	
+	There are not specific practice considerations.
+	
+
+@section sec_15		15.	Assessment of design
+
+
+@subsection sec_15_1	15.1	<Subject>
+@subsection sec_15_1_1	15.1.1	Comparison with Existing Functionality
+	
+	Not applicable.
+
+
+@subsection sec_15_1_2	15.1.2	Use
+	
+	Not applicable.
+
+*/ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/**
+@page _issues		Risks and Open Issues
+	
+	Not applicable.
+
+*/ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/**
+@page _acknowledgements	Acknowledgements
+
+
+*/ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/**
+@page _abbreviations	Terms and Abbreviations
+<B>URI/URL/</B> - Universal Resource Indicator / Universal Resource Locator define the location of a file or resource on a local or remote machine.
+*/ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/**
+@page _acronyms		Acronyms
+<B>CPU</B>	Central Processing Unit<BR>
+<B>DDC</B>	Device Driver Control<BR>
+<B>ACK</B>	ACKnowledgement<BR>
+*/ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/**
+@page _references	References
+<B>Low Level Design Template</B> (02-Juen-2014)<BR>
+<B>High Level Design</B> (02-June-2014)<BR>
+<B>Message Interface Specification</B> (02-June-2014)<BR>
+*/
+ 

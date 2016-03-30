@@ -1,0 +1,17 @@
+#
+#CircleObject size R G B points : X Y Z degRotation
+#
+CircleObject 110000 20 80 150 20 : 0 0 11000 0
+CircleObject 4100 010 190 180 30 : 0 0 7000 0
+CircleObject 3100 010 190 180 30 : 3000 0 14000 0
+CircleObject 3100 010 190 180 30 : -3000 0 16000 0
+CircleObject 4000 200 200 10 30 : 0 0 7000 0
+CircleObject 3000 200 200 10 30 : 3000 0 14000 0
+CircleObject 3000 200 200 10 30 : -3000 0 16000 0
+CircleObject 3000 062 150 045 20 : 0 0 7000 0
+CircleObject 2500 062 150 045 20 : 3000 0 14000 0
+CircleObject 200 5 118 165 20 : 2000 0 14500 0
+CircleObject 100 5 118 165 20 : -1250 2 7750 0
+CircleObject 500 140 180 055 20 : 1750 2 8750 0
+CircleObject 100 140 180 055 8 : 1250 2 8500 0
+endOfObjects

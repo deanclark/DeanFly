@@ -1,0 +1,116 @@
+#
+# file startX startY startZ orientationDeg scale
+# (commented lines must start with a # character
+#
+cubeL20scale.txt 4240 0 2600 0 20
+cubeJ20scale.txt 4480 0 2600 0 20
+cubeL20scale.txt 4480 0 2600 0 20
+cubeJ20scale.txt 4700 0 2600 0 20
+#
+cubeJ20scale.txt 4000 0 3000 180 20
+cubeL20scale.txt 4000 0 3000 180 20
+cubeJ20scale.txt 4000 0 3000 0 20
+cubeL20scale.txt 4000 0 3000 0 20
+cubeJ20scale.txt 4240 0 3000 180 20
+cubeL20scale.txt 4240 0 3000 180 20
+cubeJ20scale.txt 4240 0 3000 0 20
+cubeL20scale.txt 4240 0 3000 0 20
+cubeJ20scale.txt 4480 0 3000 180 20
+cubeL20scale.txt 4480 0 3000 180 20
+cubeJ20scale.txt 4480 0 3000 0 20
+cubeL20scale.txt 4480 0 3000 0 20
+cubeJ20scale.txt 4600 0 3000 180 20
+cubeL20scale.txt 4600 0 3000 0 20
+# Caroline's Cube below
+cubeL20scale.txt 4000 0 3400 180 20
+# Dean's Cube below
+AcubeL20scale.txt 4000 0 3600 180 20
+cubeJ20scale.txt 4000 0 3600 180 20
+# wall between Dean's and Bec's cubes
+cubeWall20scale.txt 4000 0 3600 180 20
+# Enrico's Cube below
+cubeL20scale.txt 4240 0 3600 180 20
+cubeL20scale.txt 4360 0 3600 180 20
+cubeJ20scale.txt 4360 0 3600 180 20
+# wall between Julian's and Jason's cubes
+cubeWall20scale.txt 4360 0 3600 180 20
+# Su-Fun
+cubeL20scale.txt 4700 0 3600 180 20
+cubeJ20scale.txt 4700 0 3600 180 20
+# wall between Su-Fun's and Daryl's cubes
+cubeWall20scale.txt 4700 0 3600 180 20
+cubeJ20scale.txt 4820 0 3600 180 20
+# Ed
+cubeL20scale.txt 4000 0 3600 0 20
+cubeJ20scale.txt 4000 0 3600 0 20
+# Sanjoy
+cubeJ20scale.txt 4240 0 3600 0 20
+# Massimo Lorenzo
+cubeJ20scale.txt 4360 0 3600 0 20
+cubeL20scale.txt 4360 0 3600 0 20
+# Fraser
+AcubeJ20scale.txt 4700 0 3600 0 20
+cubeL20scale.txt 4700 0 3600 0 20
+# Michela
+cubeL20scale.txt 4000 0 4000 180 20
+cubeL20scale.txt 4120 0 4000 180 20
+cubeL20scale.txt 4240 0 4000 180 20
+cube720scale.txt 4360 0 4000 180 20
+cubeR20scale.txt 4360 0 4000 180 20
+# Pete
+cubeL20scale.txt 4700 0 4000 180 20
+cubeL20scale.txt 4820 0 4000 180 20
+cubeL20scale.txt 4940 0 4000 180 20
+cubeL20scale.txt 5060 0 4000 180 20
+# Julian R
+cubeJ20scale.txt 4000 0 4000 0 20
+cubeJ20scale.txt 4120 0 4000 0 20
+# Glenn
+AcubeJ20scale.txt 4240 0 4000 0 20
+cube720scale.txt 4360 0 4000 0 20
+cubeR20scale.txt 4360 0 4000 0 20
+# Giuseppi
+cubeJ20scale.txt 4700 0 4000 0 20
+cubeJ20scale.txt 4820 0 4000 0 20
+cubeJ20scale.txt 4940 0 4000 0 20
+# Dale
+cubeL20scale.txt 4000 0 4400 180 20
+cubeL20scale.txt 4120 0 4400 180 20
+cubeL20scale.txt 4240 0 4400 180 20
+# Phil
+AcubeL20scale.txt 4360 0 4400 180 20
+cubeJ20scale.txt 4360 0 4400 180 20
+# wall between Phil's and Vanessa's cubes
+cubeWall20scale.txt 4360 0 4400 180 20
+# Steve S
+cube720scale.txt 4000 0 4400 0 20
+cubeR20scale.txt 4000 0 4400 0 20
+cubeR20scale.txt 4240 0 4400 0 20
+cube720scale.txt 4360 0 4400 0 20
+cubeR20scale.txt 4360 0 4400 0 20
+# kevin
+cube720scale.txt 4500 0 4400 0 20
+cubeR20scale.txt 4500 0 4400 0 20
+#
+# outside walls
+#
+#lab wall
+outSideWall200scale.txt 3800 0 4600 180 200
+# oposite lab wall
+outSideWall200scale.txt 5200 0 4600 180 200
+# outside wall Malc's cube
+2x2outSideWall200scale.txt 3800 0 4600 90 200
+2x2outSideWall200scale.txt 4000 0 4600 90 200
+2x2outSideWall200scale.txt 4200 0 4600 90 200
+2x2outSideWall200scale.txt 4400 0 4600 90 200
+2x2outSideWall200scale.txt 4600 0 4600 90 200
+2x2outSideWall200scale.txt 4800 0 4600 90 200
+# new mezz wall to old mezz
+2x2outSideWall200scale.txt 3800 0 2400 90 200
+2x2outSideWall200scale.txt 4000 0 2400 90 200
+2x2outSideWall200scale.txt 4200 0 2400 90 200
+2x2outSideWall200scale.txt 4400 0 2400 90 200
+2x2outSideWall200scale.txt 4600 0 2400 90 200
+2x2outSideWall200scale.txt 4800 0 2400 90 200
+#light20scale.txt 4600 400 2600 0 40
+endOfObjects

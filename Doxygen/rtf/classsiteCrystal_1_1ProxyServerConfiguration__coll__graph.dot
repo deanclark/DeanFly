@@ -1,0 +1,6 @@
+digraph "siteCrystal.ProxyServerConfiguration"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{siteCrystal.ProxyServerConfiguration\n|~ props\l|+ setProxy()\l+ setProxyName()\l+ setProxyPort()\l+ getProxyName()\l+ getProxyPort()\l+ setProxyNamePort()\l+ testInet()\l+ testInet()\l+ getInetProxy()\l+ getInetProxy()\l}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+}

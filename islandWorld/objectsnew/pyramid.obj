@@ -1,0 +1,20 @@
+# 
+#
+g Pyramid
+
+v  0  0  0
+v  1  0  0
+v  1  0  1
+v  0  0  1
+v  0.5  2.0  0.5
+
+usemtl red
+f  5  1  2
+usemtl blue
+f  5  2  3
+usemtl green
+f  5  3  4
+usemtl yellow
+f  5  4  1
+usemtl red
+f  1  2  3  4
