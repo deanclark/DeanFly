@@ -168,7 +168,7 @@ public class DeanFly extends JApplet implements ActionListener, ItemListener {
         
         //hostURLparameter = "http://127.0.0.1/DeanFlyJava/";
         //hostURLparameter = "http://localhost:8084/DeanFly/";   // NetBeans Debug 4.1
-        hostURLparameter = "/home/dean.clark/DeanFly-29-03-2016/";
+        hostURLparameter = "";  // path could be hard coded here if need be
         if(!GraphPnl.runlocal)
             hostURLparameter = "http://www.dean.seetech.com/DeanFly/build/web/";   // NetBeans Debug 4.1
         // DCDebug: Nothing is done with this Debug Trace parameter yet
