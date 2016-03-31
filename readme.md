@@ -13,49 +13,49 @@ View from Field 1:
 Controls
 -----------
 
-S	Start
-Q	Quit (Second Q will exit the application)
-C	Continue following a quit
+* S	Start
+* Q	Quit (Second Q will exit the application)
+* C	Continue following a quit
 
-+/-	Speed
-a	Roll Left
-d	Roll Right
-s	Nose Up
-w	Nose Down 
-1	Yaw Left
-3	Yaw Right
+* +/-	Speed
+* a	Roll Left
+* d	Roll Right
+* s	Nose Up
+* w	Nose Down 
+* 1	Yaw Left
+* 3	Yaw Right
 
-i	Instrumentation
-m	map
-M	Clip Map
-h	Help
+* i	Instrumentation
+* m	map
+* M	Clip Map
+* h	Help
 
 
 
 Cheat Controls
 -----------
-k	Cheat Key Help
-.	Reset to Air Field 1
-v or ]	Scroll between each view / vehicle
-N	North
-E	East
-S	South
-W	West
-(	Decrease altitude
-)	Decrease altitude
+* k	Cheat Key Help
+* '.'	Reset to Air Field 1
+* v or ]	Scroll between each view / vehicle
+* N	North
+* E	East
+* S	South
+* W	West
+* (	Decrease altitude
+* )	Decrease altitude
 
-Mouse Left button	move to field 1 takeoff position
-Mouse Right button	move to in flight position
-Mouse Center button	High Altitude, nose down
+* Mouse Left button	move to field 1 takeoff position
+* Mouse Right button	move to in flight position
+* Mouse Center button	High Altitude, nose down
 
 
 3D Educational Controls
 -----------
-b	Fill/Wireframe mode
-c	Clipping on/off
-C	Screen Clipping on/off
-	Hidden Surface Removal
-	Surface Sort
+* b	Fill/Wireframe mode
+* c	Clipping on/off
+* C	Screen Clipping on/off
+* h	Hidden Surface Removal
+* ?	Surface Sort
 
 
 Map Views
@@ -94,26 +94,27 @@ Wireframe View from Field 1:
 Running the application
 -----------
 
-To compile:
+ 
+#### To compile:
 
-    ant
+*     ant
 
-To run:
+#### To run:
    
-   export CLASSPATH=$CLASSPATH:DeanFly.jar
-   or
-   cd into folder containing DeanFly.class
+   * export CLASSPATH=$CLASSPATH:DeanFly.jar
+   * or
+   * cd into folder containing DeanFly.class
 
-   java -Xms1024m DeanFly
+   * java -Xms1024m DeanFly
 
     
 
-To rebuild Eclipse Project:
-    mvn eclipse:clean eclipse:eclipse -DdownloadSources -Declipse:useProjectReferences=false -Dwtpversion=2.0
+#### To rebuild Eclipse Project:
+*     mvn eclipse:clean eclipse:eclipse -DdownloadSources -Declipse:useProjectReferences=false -Dwtpversion=2.0
 
-JUnit
-	from within Eclipse right click the DeanFly project and Run As->JUnit Test
+#### JUnit
+* 	from within Eclipse right click the DeanFly project and Run As->JUnit Test
 	
 	
-Ant build of jar file
-    ant createjar
+#### Ant build of jar file
+*     ant createjar
