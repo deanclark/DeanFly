@@ -5,9 +5,7 @@ DeanFly
 This is by no means a polished product and should be used only to demonstrate the some of the concepts used within 3D graphics programming.  This software was originally developed in C++ during a 3D Graphics module for a BSc Computing for Real-Time Systems degree and the University of the West of England UWE.  This Watcom C++ source was later ported to Java purely as a learning exercise.  Minor changes have been made since this was ported to enable compilation under java 1.7.
 
 View from Field 1: 
-![alt text][2][1]
-  [2]: Doxygen/Screenshot-DeanFly-Field1.png
-  [1]: https://github.com/deanclark/DeanFly/Doxygen/Screenshot-DeanFly-Field1.png "Image of Field 1 from the ground"
+!["Image of Field 1 from the ground"]("https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-Field1.png")
 
 
 Controls
@@ -62,32 +60,24 @@ Map Views
 -----------
 
 The Map: 
-![alt text][4][3]
-  [4]: Doxygen/Screenshot-DeanFly-Map.png
-  [3]: https://github.com/deanclark/DeanFly/Doxygen/Screenshot-DeanFly-Map.png "Image of Map"
+!["Image of Map"](https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-Map.png)
 
 The Clip Map: 
-![alt text][6][5]
-  [6]: Doxygen/Screenshot-DeanFly-ClipMap.png
-  [5]: https://github.com/deanclark/DeanFly/Doxygen/Screenshot-DeanFly-ClipMap.png "Image of the Clip Map"
+!["Image of the Clip Map"](https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-ClipMap.png)
 
 
 In Flight
 -----------
 
 View from High Altitude: 
-![alt text][8][7]
-  [8]: Doxygen/Screenshot-DeanFly-High.png
-  [7]: https://github.com/deanclark/DeanFly/Doxygen/Screenshot-DeanFly-High.png "Image from High Altitude"
+!["Image from High Altitude"](https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-High.png)
 
 
 Wireframe View
 -----------
 
 Wireframe View from Field 1: 
-![alt text][10][9]
-  [10]: Doxygen/Screenshot-DeanFly-Wireframe.png
-  [9]: https://github.com/deanclark/DeanFly/Doxygen/Screenshot-DeanFly-Wireframe.png "Wireframe View"
+!["Wireframe View"](https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-Wireframe.png)
 
 
 
