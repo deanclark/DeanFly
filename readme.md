@@ -5,7 +5,7 @@ DeanFly
 This is by no means a polished product and should be used only to demonstrate the some of the concepts used within 3D graphics programming.  This software was originally developed in C++ during a 3D Graphics module for a BSc Computing for Real-Time Systems degree and the University of the West of England UWE.  This Watcom C++ source was later ported to Java purely as a learning exercise.  Minor changes have been made since this was ported to enable compilation under java 1.7.
 
 View from Field 1: 
-!["Image of Field 1 from the ground"]("https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-Field1.png")
+!["Image of Field 1 from the ground"](https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-Field1.png)
 
 
 Controls
@@ -77,7 +77,7 @@ Wireframe View
 -----------
 
 Wireframe View from Field 1: 
-!["Wireframe View"](https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-Wireframe.png)
+!["Wireframe View<BR>"](https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-Wireframe.png)
 
 
 
