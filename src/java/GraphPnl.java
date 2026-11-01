@@ -3447,17 +3447,21 @@ void drawObject(Graphics g, WorldItem anObject, Craft viewer, boolean flip) {
         String testString = new String("Quit: q/Q");
         int w = fm.stringWidth(testString);
         int h = fm.getHeight();
+        // bottom right corner of the view, clear of the text columns at the top
+        final int margin = 10;
+        int x = crafts[currentCraft].windowWidth  - w - margin;
+        int y = crafts[currentCraft].windowHeight - h - margin;
 
         if (flipped == true)
             g.setColor(Color.blue);
         else
             g.setColor(Color.red);
 
-        g.fillRect(750, 10, w, h);        // filled rectangle
+        g.fillRect(x, y, w, h);        // filled rectangle
         g.setColor(Color.black);
-        g.drawRect(750, 10, w, h);        // outline
+        g.drawRect(x, y, w, h);        // outline
         
-        g.drawString(testString, 750, 10 + fm.getAscent());    // text
+        g.drawString(testString, x, y + fm.getAscent());    // text
         
     } // end quitBox
 
@@ -3818,92 +3822,104 @@ void drawObject(Graphics g, WorldItem anObject, Craft viewer, boolean flip) {
 
 ////////////////////////////////////////////////////////////////////////////////////
 
+    // The on screen text is laid out in two columns anchored to the right hand edge of the view
+    static final int HUD_COLUMN_WIDTH = 200;    // distance between the two columns
+    static final int HUD_VALUE_OFFSET = 60;     // distance from a label to its value
+    static final int HUD_RIGHT_MARGIN = 100;    // room for the longest value in the second column
+
+    /** x position of the first text column so that both columns fit inside the view. */
+    static int hudColumn(Craft viewer) {
+        return Math.max(0, viewer.windowWidth - HUD_COLUMN_WIDTH - HUD_VALUE_OFFSET - HUD_RIGHT_MARGIN - 20);
+    }
+
     public void keyHelp(Graphics g, Craft viewer) {
+        final int col1 = hudColumn(viewer), val1 = col1 + HUD_VALUE_OFFSET;
+        final int col2 = col1 + HUD_COLUMN_WIDTH, val2 = col2 + HUD_VALUE_OFFSET;
         g.setColor(Color.black);
 
         // Quit
-        g.drawString("Quit", 400,10);            g.drawString(": Q/q",460,10);    // text
+        g.drawString("Quit", col1,10);            g.drawString(": Q/q",val1,10);    // text
         
         if (instumentDisplay)
             g.setColor(Color.red);
         // Instruments
-        g.drawString("Instumentation",600,10);    g.drawString(": i",660,10);        // text
+        g.drawString("Instumentation",col2,10);    g.drawString(": i",val2,10);        // text
         g.setColor(Color.black);
         
         // Pitch
-        g.drawString("Pitch",400,20);            g.drawString(": 2/8",460,20);    // text
+        g.drawString("Pitch",col1,20);            g.drawString(": 2/8",val1,20);    // text
 
         // Yaw
-        g.drawString("Yaw",600,20);                g.drawString(": 1/3",660,20);    // text
+        g.drawString("Yaw",col2,20);                g.drawString(": 1/3",val2,20);    // text
 
         // Roll
-        g.drawString("Roll",400,30);            g.drawString(": 4/6",460,30);    // text
+        g.drawString("Roll",col1,30);            g.drawString(": 4/6",val1,30);    // text
 
         // Altitude
-        g.drawString("Runway 1/2",600,30);        g.drawString(": [/]",660,30);    // text
+        g.drawString("Runway 1/2",col2,30);        g.drawString(": [/]",val2,30);    // text
 
         //  Speed
-        g.drawString("Speed", 400,40);            g.drawString(": +/-", 460,40);    // text
+        g.drawString("Speed", col1,40);            g.drawString(": +/-", val1,40);    // text
 
         if (flipped)
             g.setColor(Color.red);
         //  Flip
-        g.drawString("Flip", 600,40);            g.drawString(": f", 660,40);    // text
+        g.drawString("Flip", col2,40);            g.drawString(": f", val2,40);    // text
         g.setColor(Color.black);
 
         // Altitude
-        g.drawString("Altitude", 400,50);        g.drawString(": (/)", 460,50);    // text
+        g.drawString("Altitude", col1,50);        g.drawString(": (/)", val1,50);    // text
 
         if (perspective)
             g.setColor(Color.red);
         //  Perspective
-        g.drawString("Perspective", 600,50);    g.drawString(": p", 660,50);        // text
+        g.drawString("Perspective", col2,50);    g.drawString(": p", val2,50);        // text
         g.setColor(Color.black);
 
         if (mapOn)
             g.setColor(Color.red);
         //  2D Map on/off
-        g.drawString("2D Map", 400,60);            g.drawString(": m", 460,60);        // text
+        g.drawString("2D Map", col1,60);            g.drawString(": m", val1,60);        // text
         g.setColor(Color.black);
 
         if (displayClipMap)
             g.setColor(Color.red);
         //  Clipping Map
-        g.drawString("Clipping Map", 600,60);    g.drawString(": M", 660,60);        // text
+        g.drawString("Clipping Map", col2,60);    g.drawString(": M", val2,60);        // text
         g.setColor(Color.black);
 
         if (wireframe)
             g.setColor(Color.red);
         //  This Help Menu
-        g.drawString("Wireframe", 400,70);        g.drawString(": w", 460,70);    // text
+        g.drawString("Wireframe", col1,70);        g.drawString(": w", val1,70);    // text
         g.setColor(Color.black);
 
         if (!clip)
             g.setColor(Color.red);
         //  This Help Menu
-        g.drawString("Z Clipping", 600,70);        g.drawString(": c", 660,70);    // text
+        g.drawString("Z Clipping", col2,70);        g.drawString(": c", val2,70);    // text
         g.setColor(Color.black);
 
         if (!clipScreen)
             g.setColor(Color.red);
         //  This Help Menu
-        g.drawString("Screen Clip", 400,80);        g.drawString(": C", 460,80);    // text
+        g.drawString("Screen Clip", col1,80);        g.drawString(": C", val1,80);    // text
         g.setColor(Color.black);
 
         //  Scroll through craft
-        g.drawString("Scroll craft", 600,80);        g.drawString(":v", 660,80);    // text
+        g.drawString("Scroll craft", col2,80);        g.drawString(":v", val2,80);    // text
         g.setColor(Color.black);
 
         if (!hiddenSurfaces)
             g.setColor(Color.red);
         //  This Help Menu
-        g.drawString("Surface removal", 400,90);        g.drawString(": H", 460,90);    // text
+        g.drawString("Surface removal", col1,90);        g.drawString(": H", val1,90);    // text
         g.setColor(Color.black);
 
         if (keyHelpDisplay)
             g.setColor(Color.red);
         //  This Help Menu
-        g.drawString("This menu", 600,90);        g.drawString(": H/h/K/k", 660,90);    // text
+        g.drawString("This menu", col2,90);        g.drawString(": H/h/K/k", val2,90);    // text
         g.setColor(Color.black);
 
     } // end keyHelp
@@ -3912,34 +3928,36 @@ void drawObject(Graphics g, WorldItem anObject, Craft viewer, boolean flip) {
 ////////////////////////////////////////////////////////////////////////////////////
 
     public void whereAmI(Graphics g, Craft viewer) {
+        final int col1 = hudColumn(viewer), val1 = col1 + HUD_VALUE_OFFSET;
+        final int col2 = col1 + HUD_COLUMN_WIDTH, val2 = col2 + HUD_VALUE_OFFSET;
         g.setColor(Color.black);
         
         // Pitch
-        g.drawString(("Pitch   : ".concat(Integer.toString((int) (viewer.Pitch*(180/PI))))), 400,10);    // text
+        g.drawString(("Pitch   : ".concat(Integer.toString((int) (viewer.Pitch*(180/PI))))), col1,10);    // text
 
         // Yaw
-        g.drawString(("Yaw     : ".concat(Integer.toString((int) (viewer.Yaw*(180/PI))))), 600,10);    // text
+        g.drawString(("Yaw     : ".concat(Integer.toString((int) (viewer.Yaw*(180/PI))))), col2,10);    // text
 
         // Roll
-        g.drawString(("Roll    : ".concat(Integer.toString((int) (viewer.Roll*(180/PI))))), 400,20);    // text
+        g.drawString(("Roll    : ".concat(Integer.toString((int) (viewer.Roll*(180/PI))))), col1,20);    // text
 
         // Altitude
-        g.drawString(("Altitude: ".concat(Integer.toString((int) viewer.eyeY))), 600,20);    // text
+        g.drawString(("Altitude: ".concat(Integer.toString((int) viewer.eyeY))), col2,20);    // text
 
         //  Distance from Base
-        g.drawString(("Base    : ".concat(Integer.toString((int) viewer.eyeX))), 400,30);    // text
+        g.drawString(("Base    : ".concat(Integer.toString((int) viewer.eyeX))), col1,30);    // text
 
         //  Distance from Base
-        g.drawString(("Distance: ".concat(Integer.toString((int) viewer.eyeZ))), 600,30);    // text
+        g.drawString(("Distance: ".concat(Integer.toString((int) viewer.eyeZ))), col2,30);    // text
 
         //  Speed
-        g.drawString(("Speed   : ".concat(Integer.toString((int) viewer.Speed))), 400,40);    // text
+        g.drawString(("Speed   : ".concat(Integer.toString((int) viewer.Speed))), col1,40);    // text
 
         // Craft selection
-        g.drawString(("Craft   : ".concat(Integer.toString((int) (currentCraft+1))).concat(" of ").concat(Integer.toString((int) availableCrafts)).concat(" (").concat(crafts[currentCraft].type).concat(")") ), 600,40);    // text
+        g.drawString(("Craft   : ".concat(Integer.toString((int) (currentCraft+1))).concat(" of ").concat(Integer.toString((int) availableCrafts)).concat(" (").concat(crafts[currentCraft].type).concat(")") ), col2,40);    // text
 //currentCraft < (availableCrafts 
         //  Flip
-        g.drawString(("Window  : ".concat(Integer.toString((int) viewer.windowHeight))), 400,50);    // text/
+        g.drawString(("Window  : ".concat(Integer.toString((int) viewer.windowHeight))), col1,50);    // text/
     } // end whereAmI
 
 
