@@ -388,6 +388,39 @@ class GraphPnl extends Panel //JPanel for KeyListener 2007
 
 
 /**
+ * Draws the background, islands, world objects and (optionally) the 2D map into the given graphics.
+ * Used by update() and by the headless tests.
+ */
+    void drawScene(Graphics g) {
+        Graphics offgraphics = g;
+        offgraphics.setColor(getBackground());
+        offgraphics.fillRect(0, 0, crafts[currentCraft].windowWidth, crafts[currentCraft].windowHeight);
+        
+        // sort objects by Z order
+  //        SortObjects(objects, craft, sortedObjectList, nLandMassObjects, nWorldObjects);
+        SortObjects(objects, crafts[currentCraft], nLandMassObjects, nWorldObjects);
+        if (hiddenSurfaces)
+            removeHiddenSurfaces(objects, crafts[currentCraft], nLandMassObjects, nWorldObjects);
+
+        // draw Islands
+        for (int i=0; i<nLandMassObjects; i++)
+        {
+            // draw each object in Z order
+            drawObject(offgraphics, objects[i], crafts[currentCraft], flipped);
+        }
+        
+        // draw Islands Objects
+        for (int i=nLandMassObjects; i<nWorldObjects; i++)
+        {
+            // draw each object in Z order
+            drawObject(offgraphics, objects[sortedObjectList[i]], crafts[currentCraft], flipped);
+        }
+
+        if (mapOn)
+            draw2DMap(objects, offgraphics, crafts[currentCraft]);
+    }
+
+/**
  * 
  */
     public synchronized void update(Graphics g) {
@@ -430,32 +463,8 @@ class GraphPnl extends Panel //JPanel for KeyListener 2007
         
         if(crafts[currentCraft] != null)
         {
-            offgraphics.setColor(getBackground());
-            offgraphics.fillRect(0, 0, crafts[currentCraft].windowWidth, crafts[currentCraft].windowHeight);
-            
-            // sort objects by Z order
-  //        SortObjects(objects, craft, sortedObjectList, nLandMassObjects, nWorldObjects);
-            SortObjects(objects, crafts[currentCraft], nLandMassObjects, nWorldObjects);
-            if (hiddenSurfaces)
-                removeHiddenSurfaces(objects, crafts[currentCraft], nLandMassObjects, nWorldObjects);
-    
-            // draw Islands
-            for (int i=0; i<nLandMassObjects; i++)
-            {
-                // draw each object in Z order
-                drawObject(offgraphics, objects[i], crafts[currentCraft], flipped);
-            }
-            
-            // draw Islands Objects
-            for (int i=nLandMassObjects; i<nWorldObjects; i++)
-            {
-                // draw each object in Z order
-                drawObject(offgraphics, objects[sortedObjectList[i]], crafts[currentCraft], flipped);
-            }
-    
-            if (mapOn)
-                draw2DMap(objects, offgraphics, crafts[currentCraft]);
-    
+            drawScene(offgraphics);
+
             FontMetrics fm = offgraphics.getFontMetrics();
             quitBox(offgraphics, box, fm);
     
@@ -525,171 +534,18 @@ void getIntersectPoint(WorldItem anItem, int startIndex, int endIndex, int verte
     //    getIntersectPoint(xpoints[vertex], ypoints[vertex], zpoints[vertex], xpoints[vertex+1], ypoints[vertex+1], zpoints[vertex+1], &tempx[vertexCount], &tempy[vertexCount], &tempz[vertexCount], ClipPoint);
 
     // create new point at the intersection of the z craft
-    zdist = anItem.zpoints[endIndex];
-            
-    dx = ( makeBigger( (anItem.xpoints[startIndex] - anItem.xpoints[endIndex])) / makeBigger( (anItem.zpoints[startIndex] - anItem.zpoints[endIndex]) ));
-    dy = ( makeBigger( (anItem.ypoints[startIndex] - anItem.ypoints[endIndex])) / makeBigger( (anItem.zpoints[startIndex] - anItem.zpoints[endIndex]) ));
+    // the end points straddle the clip plane so dz is never 0
+    zdist = ClipValue - anItem.zpoints[endIndex];
+    double dz = anItem.zpoints[startIndex] - anItem.zpoints[endIndex];
 
-    newX[vertexCount] = (anItem.xpoints[endIndex] + (-zdist * dx));
-    newY[vertexCount] = (anItem.ypoints[endIndex] + (-zdist * dy));
+    dx = (anItem.xpoints[startIndex] - anItem.xpoints[endIndex]) / dz;
+    dy = (anItem.ypoints[startIndex] - anItem.ypoints[endIndex]) / dz;
+
+    newX[vertexCount] = (anItem.xpoints[endIndex] + (zdist * dx));
+    newY[vertexCount] = (anItem.ypoints[endIndex] + (zdist * dy));
     newZ[vertexCount] = ClipValue;
 
 } // end getIntersectPoint
-
-
-/**
- * 
- * @param anItem
- * @param viewer
- * @param startPoint
- * @param endPoint
- * @param vertexCount
- * @param newX
- * @param newY
- * @param axis
- * @param screen
- * @return
- */
-int getIntersectPointScreen(WorldItem anItem, Craft viewer, int startPoint, int endPoint, int vertexCount, int[] newX, int[] newY, int axis, Screen screen){
-//    Note: Y1=0 y2=max X1=0 X2=max  top left (x,y)=(0,0)
-    int        startX, startY, endX, endY;
-    double  dx, dy;
-    boolean turningPointAdded = false;
-
-    startX    = anItem.xpoly[startPoint] - screen.xmin;
-    startY    = anItem.ypoly[startPoint] - screen.ymin;
-    endX    = anItem.xpoly[endPoint] - screen.xmin;
-    endY    = anItem.ypoly[endPoint] - screen.ymin;
-
-    dx = ( makeBigger( (anItem.xpoly[startPoint] - anItem.xpoly[endPoint]) - screen.xmin) / makeBigger( (anItem.ypoly[startPoint] - anItem.ypoly[endPoint] - screen.ymin) ));
-    dy = ( makeBigger( (anItem.ypoly[startPoint] - anItem.ypoly[endPoint]) - screen.ymin) / makeBigger( (anItem.xpoly[startPoint] - anItem.xpoly[endPoint] - screen.xmin) ));
-
-
-    // Ymin (horizontal y=min)
-    if ( axis == Y1min ) {
-        newX[vertexCount] = (int) (anItem.xpoly[startPoint] - ((anItem.ypoly[startPoint] - screen.ymin) * dx));
-        newY[vertexCount] = screen.ymin;
-    }
-
-    // Ymax (horizontal y=max)
-    else if ( axis == Y1max ) {
-        newX[vertexCount] = (int) (anItem.xpoly[startPoint] + ((screen.ymax - anItem.ypoly[startPoint]) * dx));
-        newY[vertexCount] = screen.ymax;
-    }
-
-    // Xmin (vertical x=min)
-    else if ( axis == X1min ) {
-        newX[vertexCount] = screen.xmin;
-        newY[vertexCount] = (int) (anItem.ypoly[startPoint] - ((anItem.xpoly[startPoint] - screen.xmin) * dy));
-    }
-
-    // Xmax (vertical x=max)
-    else if ( axis == X1max ) {
-        newX[vertexCount] = screen.xmax;
-        newY[vertexCount] = (int) (anItem.ypoly[startPoint] + ((screen.xmax - anItem.xpoly[startPoint]) * dy));
-    }
-    
-    // leftY
-    else if ( axis == Y2min ) {
-        // check for corner point
-        if (vertexCount > 0) {
-            if (newX[vertexCount-1] == screen.xmin)
-            {
-                newX[vertexCount] = screen.xmin;
-                newY[vertexCount] = screen.ymin;
-                vertexCount++;
-                turningPointAdded = true;
-            }
-            else if (newX[vertexCount-1] == screen.xmax)
-            {
-                newX[vertexCount] = screen.xmax;
-                newY[vertexCount] = screen.ymin;
-                vertexCount++;
-                turningPointAdded = true;
-            }
-        }
-        newX[vertexCount] = (int) (anItem.xpoly[startPoint] - ((anItem.ypoly[startPoint] - screen.ymin) * dx));
-        newY[vertexCount] = screen.ymin;
-    }
-
-    // rightY
-    else if ( axis == Y2max ) {
-        // check for corner point
-        if (vertexCount > 0) {
-            if (newX[vertexCount-1] == screen.xmin)
-            {
-                newX[vertexCount] = screen.xmin;
-                newY[vertexCount] = screen.ymax;
-                vertexCount++;
-                turningPointAdded = true;
-            }
-            else if (newX[vertexCount-1] == screen.xmax)
-            {
-                newX[vertexCount] = screen.xmax;
-                newY[vertexCount] = screen.ymax;
-                vertexCount++;
-                turningPointAdded = true;
-            }
-        }
-        newX[vertexCount] = (int) (anItem.xpoly[startPoint] + ((screen.ymax - anItem.ypoly[startPoint]) * dx));
-        newY[vertexCount] = screen.ymax;
-    }
-
-    // upperX
-    else if ( axis == X2min ) {
-        // check for corner point
-        if (vertexCount > 0) {
-            if (newY[vertexCount-1] == screen.ymin)
-            {
-                newX[vertexCount] = screen.xmin;
-                newY[vertexCount] = screen.ymin;
-                vertexCount++;
-                turningPointAdded = true;
-            }
-            else if (newY[vertexCount-1] == screen.ymax)
-            {
-                newX[vertexCount] = screen.xmin;
-                newY[vertexCount] = screen.ymax;
-                vertexCount++;
-                turningPointAdded = true;
-            }
-        }
-        newX[vertexCount] = screen.xmin;
-        newY[vertexCount] = (int) (anItem.ypoly[startPoint] - ((anItem.xpoly[startPoint] - screen.xmin) * dy));
-    }
-
-    // lowerX
-    else if ( axis == X2max ) {
-        // check for corner point
-        if (vertexCount > 0) {
-            if (newY[vertexCount-1] == screen.ymin)
-            {
-                newX[vertexCount] = screen.xmax;
-                newY[vertexCount] = screen.ymin;
-                vertexCount++;
-                turningPointAdded = true;
-            }
-            else if (newY[vertexCount-1] == screen.ymax)
-            {
-                newX[vertexCount] = screen.xmax;
-                newY[vertexCount] = screen.ymax;
-                vertexCount++;
-                turningPointAdded = true;
-            }
-        }
-        
-        newX[vertexCount] = screen.xmax;
-        newY[vertexCount] = (int) (anItem.ypoly[startPoint] + ((screen.xmax - anItem.xpoly[startPoint]) * dy));
-    }
-    
-    else
-        System.out.println("getIntersectPointScreen no match");
-
-    vertexCount++;        // increment for intersect point added
-
-    return(vertexCount);
-} // end getIntersectPointScreen
-
 
 
 /**
@@ -3053,513 +2909,92 @@ double makeBigger(double smallNumber) {
 
 
 /**
- * The Sutherland-Hodgman Polygon-Clipping Algorithm goes through each point in the poly and clips
- *  against the screen limits adding new points where required
- * 
- * @param anItem
- * @param craft
- * @param screen
+ * Sutherland-Hodgman polygon clipping against one screen edge. The poly is read from and written back to
+ * anItem.xpoly[] / anItem.ypoly[] / anItem.points, so clipping against all four edges is four calls.
+ * Each stage needs no corner handling; the corners appear naturally when the next edge is clipped.
+ *
+ * @param anItem      poly to clip (screen co-ordinates)
+ * @param vertical    true to clip against the vertical line x = limit, false for the horizontal line y = limit
+ * @param keepGreater true to keep the side where the co-ordinate is >= limit, false to keep <= limit
+ * @param limit       screen co-ordinate of the clipping edge
  */
-void ClipPolyXmin(WorldItem anItem, Craft craft, Screen screen) {
-//
-//    anObject.xpoly[i]
-//    anObject.ypoly[i]
-//    anObject.points
-//
-// Calls:
-//            getIntersectPointScreen()
-    
-    //final int POLY_POINTS = 200;  // max number of points for each polygon    Polygon polygonStorage[] = new Polygon[POLYS];
-    boolean outBounds = false;                // init non-visable
-//    boolean turningPoint = false;                    // was a point added for the corner of the screen
-    int[] tempx = new int[WorldItem.POLY_POINTS];  
+void clipPolyAgainstEdge(WorldItem anItem, boolean vertical, boolean keepGreater, int limit) {
+    final int n = anItem.points;
+    if (n <= 0)
+        return;
+
+    int[] tempx = new int[WorldItem.POLY_POINTS];
     int[] tempy = new int[WorldItem.POLY_POINTS];
-    int vertexCount = 0;                    // count of vertices in new poly
-    int clipAxis = 0, clipAxisPrevious;        // leftY, rightY, lowerX, upperX
-//    final int Y1min = 1, Y1max = 2, X1min = 4, X1max = 8, Y2min = 16, Y2max = 32, X2min = 64, X2max = 128;    // axis bounds flag
-//    Note: Y1=0 y2=max X1=0 X2=max  top left (x,y)=(0,0)
+    int vertexCount = 0;
 
-
-    if (anItem.points > 0)
+    for (int i = 0; i < n; i++)
     {
-    // CLIP AGANST Xmin
-    // first poly vertex to last-1 vertex
-    for (int vertex=0; vertex<(anItem.points-1); vertex++)
-    {
-        if (vertexCount >= WorldItem.POLY_POINTS)
-            System.out.println("ClipPolyXmin reached maximum POLY_POINTS");
+        int next = (i + 1) % n;
+        int cx = anItem.xpoly[i],    cy = anItem.ypoly[i];
+        int nx = anItem.xpoly[next], ny = anItem.ypoly[next];
+        boolean currentInside = isInsideScreenEdge(vertical ? cx : cy, keepGreater, limit);
+        boolean nextInside    = isInsideScreenEdge(vertical ? nx : ny, keepGreater, limit);
 
-        clipAxisPrevious = clipAxis;
-        clipAxis = 0;
-
-        // current point is inside Bounds of X min
-        if (anItem.xpoly[vertex] >= screen.xmin)
+        if (currentInside)
         {
-            // if the first point is inside the bounds copy this point straight into the temp[]
-            // copy existing point to temp point array
-            tempx[vertexCount] = anItem.xpoly[vertex];
-            tempy[vertexCount] = anItem.ypoly[vertex];
-            vertexCount++;                          // increment number of vertices in new poly
+            if (vertexCount >= WorldItem.POLY_POINTS - 1)
+                break;
+            tempx[vertexCount] = cx;
+            tempy[vertexCount] = cy;
+            vertexCount++;
+        }
 
-            // if the X part of the second point is out of bounds X min create a new point at the intersection
-            if (anItem.xpoly[vertex+1] < screen.xmin)
+        if (currentInside != nextInside)
+        {
+            if (vertexCount >= WorldItem.POLY_POINTS - 1)
+                break;
+            // the edge crosses the limit, so the divisor is never 0
+            if (vertical)
             {
-                clipAxis = X1min;
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, vertex, vertex+1, vertexCount, tempx, tempy, clipAxis, screen);
-/*                vertexCount++;                          // increment number of vertices in new poly
-
-                if (turningPoint) {
-                    vertexCount++;                          // increment number of vertices for corner point
-                }
-*/                
+                tempx[vertexCount] = limit;
+                tempy[vertexCount] = (int) Math.round(cy + ((double) (limit - cx) * (ny - cy)) / (nx - cx));
             }
-        }
-        else if (anItem.xpoly[vertex] < screen.xmin)
-        {
-            // if the X part of the second point is out of bounds X min
-            if (anItem.xpoly[vertex+1] >= screen.xmin)
+            else
             {
-                clipAxis = X2min;
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, vertex, vertex+1, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
+                tempx[vertexCount] = (int) Math.round(cx + ((double) (limit - cy) * (nx - cx)) / (ny - cy));
+                tempy[vertexCount] = limit;
             }
+            vertexCount++;
         }
-            
-    } // end for        
+    }
 
-
-    // The last poly vertex and first poly vertex
-        // current point is inside Bounds of X min
-        if (anItem.xpoly[anItem.points-1] >= screen.xmin)
-        {
-            // if the first point is inside the bounds copy this point straight into the temp[]
-            // copy existing point to temp point array
-            tempx[vertexCount] = anItem.xpoly[anItem.points-1];
-            tempy[vertexCount] = anItem.ypoly[anItem.points-1];
-            vertexCount++;                          // increment number of vertices in new poly
-
-            // if the X part of the second point is out of bounds X min
-            if (anItem.xpoly[0] < screen.xmin)
-            {
-                clipAxis = X1min;
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, anItem.points-1, 0, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-        else if (anItem.xpoly[anItem.points-1] < screen.xmin)
-        {
-            // if the X part of the second point is out of bounds X min
-            if (anItem.xpoly[0] >= screen.xmin)
-            {
-                clipAxis = X2min;
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, anItem.points-1, 0, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }            
-        }
-
-
-    // copy new points to point arrays
-    for (int i=0; i<vertexCount; i++)
+    for (int i = 0; i < vertexCount; i++)
     {
         anItem.xpoly[i] = tempx[i];
         anItem.ypoly[i] = tempy[i];
-    } // end for
-
-    // new vertex count
+    }
     anItem.points = vertexCount;
-    } // end (anItem.points > 0)
-
-} // end ClipPolyXmin
+} // end clipPolyAgainstEdge
 
 
-////////////////////////////////////////////////////////////////////////////////////
+static boolean isInsideScreenEdge(int value, boolean keepGreater, int limit) {
+    return keepGreater ? (value >= limit) : (value <= limit);
+}
 
 
-/**
- *  The Sutherland-Hodgman Polygon-Clipping Algorithm goes through each point in the poly and clips
- *   against the screen limits adding new points where required
- * 
- * @param anItem
- * @param craft
- * @param screen
- */
+void ClipPolyXmin(WorldItem anItem, Craft craft, Screen screen) {
+    clipPolyAgainstEdge(anItem, true, true, screen.xmin);
+}
+
+
 void ClipPolyXmax(WorldItem anItem, Craft craft, Screen screen) {
-//
-//    anObject.xpoly[i]
-//    anObject.ypoly[i]
-//    anObject.points
-    
-    final int POLY_POINTS    = 200;  // max number of points for each polygon    Polygon polygonStorage[] = new Polygon[POLYS];
-    boolean outBounds = false;                // init non-visable
-//    boolean turningPoint = false;                    // was a point added for the corner of the screen
-    int[] tempx = new int[POLY_POINTS];
-    int[] tempy = new int[POLY_POINTS];
-    int vertexCount = 0;                    // count of vertices in new poly
-    int clipAxis = 0, clipAxisPrevious;        // leftY, rightY, lowerX, upperX
-//    final int Y1min = 1, Y1max = 2, X1min = 4, X1max = 8, Y2min = 16, Y2max = 32, X2min = 64, X2max = 128;    // axis bounds flag
-//    Note: Y1=0 y2=max X1=0 X2=max  top left (x,y)=(0,0)
-
-    if (anItem.points > 0)
-    {
-    // CLIP AGANST Xmax
-    // first poly vertex to last-1 vertex
-    for (int vertex=0; vertex<(anItem.points-1); vertex++)
-    {
-        if (vertexCount >= POLY_POINTS)
-            System.out.println("ClipPolyXmax reached maximum POLY_POINTS");
-
-        clipAxisPrevious = clipAxis;
-        clipAxis = 0;
-
-        // current point is inside Bounds of X min
-        if (anItem.xpoly[vertex] <= screen.xmax)
-        {
-            // if the first point is inside the bounds copy this point straight into the temp[]
-            // copy existing point to temp point array
-            tempx[vertexCount] = anItem.xpoly[vertex];
-            tempy[vertexCount] = anItem.ypoly[vertex];
-            vertexCount++;                          // increment number of vertices in new poly
-
-            // if the X part of the second point is out of bounds X min create a new point at the intersection
-            if (anItem.xpoly[vertex+1] > screen.xmax)
-            {
-                clipAxis = X1max; // was X1max
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, vertex, vertex+1, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-        else if (anItem.xpoly[vertex] > screen.xmax)
-        {
-            // if the X part of the second point is out of bounds X min
-            if (anItem.xpoly[vertex+1] <= screen.xmax)
-            {
-                clipAxis = X2max; //was X2max
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, vertex, vertex+1, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-            
-    } // end for        
+    clipPolyAgainstEdge(anItem, true, false, screen.xmax);
+}
 
 
-    // The last poly vertex and first poly vertex
-        // current point is inside Bounds of X max
-        if (anItem.xpoly[anItem.points-1] <= screen.xmax)
-        {
-            // if the first point is inside the bounds copy this point straight into the temp[]
-            // copy existing point to temp point array
-            tempx[vertexCount] = anItem.xpoly[anItem.points-1];
-            tempy[vertexCount] = anItem.ypoly[anItem.points-1];
-            vertexCount++;                          // increment number of vertices in new poly
-
-            // if the X part of the second point is out of bounds X max
-            if (anItem.xpoly[0] > screen.xmax)
-            {
-                clipAxis = X1max; // was X1max
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, anItem.points-1, 0, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-        else if (anItem.xpoly[anItem.points-1] > screen.xmax)
-        {
-            // if the X part of the second point is out of bounds X max
-            if (anItem.xpoly[0] <= screen.xmax)
-            {
-                clipAxis = X2max; // was X2max
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, anItem.points-1, 0, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }            
-        }
+void ClipPolyYmin(WorldItem anItem, Craft craft, Screen screen) {
+    clipPolyAgainstEdge(anItem, false, true, screen.ymin);
+}
 
 
-    // copy new points to point arrays
-    for (int i=0; i<vertexCount; i++)
-    {
-        anItem.xpoly[i] = tempx[i];
-        anItem.ypoly[i] = tempy[i];
-    } // end for
-
-    // new vertex count
-    anItem.points = vertexCount;
-
-    } // end (anItem.points > 0)
-
-} // end ClipPolyXmax
-
-
-
-
-/**
- * The Sutherland-Hodgman Polygon-Clipping Algorithm goes through each point in the poly and clips 
- * against the screen limits adding new points where required
- * 
- * @param anItem
- * @param craft
- * @param screen
- */
-void ClipPolyYmin(WorldItem anItem, Craft craft, Screen screen){
-//
-//    anObject.xpoly[i]
-//    anObject.ypoly[i]
-//    anObject.points
-
-    
-    final int POLY_POINTS    = 200;  // max number of points for each polygon    Polygon polygonStorage[] = new Polygon[POLYS];
-    boolean outBounds = false;                // init non-visable
-//    boolean turningPoint = false;                    // was a point added for the corner of the screen
-    int[] tempx = new int[POLY_POINTS];
-    int[] tempy = new int[POLY_POINTS];
-    int vertexCount = 0;                    // count of vertices in new poly
-    int clipAxis = 0, clipAxisPrevious;        // leftY, rightY, lowerX, upperX
-//    final int Y1min = 1, Y1max = 2, X1min = 4, X1max = 8, Y2min = 16, Y2max = 32, X2min = 64, X2max = 128;    // axis bounds flag
-//    Note: Y1=0 y2=max X1=0 X2=max  top left (x,y)=(0,0)
-
-
-    if (anItem.points >= POLY_POINTS)
-        System.out.println("ClipPolyYmin reached maximum object points: " + anItem.points);
-
-    if (anItem.points > 0)
-    {
-
-    // CLIP AGANST Ymin
-    // first poly vertex to last-1 vertex
-    for (int vertex=0; vertex<(anItem.points-1); vertex++)
-    {
-        if (vertexCount >= POLY_POINTS)
-            System.out.println("ClipPolyYmin reached maximum POLY_POINTS");
-            
-        clipAxisPrevious = clipAxis;
-        clipAxis = 0;
-
-        // current point is inside Bounds of X min
-        if (anItem.ypoly[vertex] >= screen.ymin)
-        {
-            // if the first point is inside the bounds copy this point straight into the temp[]
-            // copy existing point to temp point array
-            tempx[vertexCount] = anItem.xpoly[vertex];
-            tempy[vertexCount] = anItem.ypoly[vertex];
-            vertexCount++;                          // increment number of vertices in new poly
-
-            // if the Y part of the second point is out of bounds Y min create a new point at the intersection
-            if (anItem.ypoly[vertex+1] < screen.ymin)
-            {
-                // going out of bounds
-                clipAxis = Y1min;
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, vertex, vertex+1, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-        else if (anItem.ypoly[vertex] < screen.ymin)
-        {
-            // if the Y part of the second point is out of bounds Y min
-            if (anItem.xpoly[vertex+1] >= screen.ymin)
-            {
-                // comeing into bounds
-                clipAxis = Y2min;
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, vertex, vertex+1, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-            
-    } // end for        
-
-
-    // The last poly vertex and first poly vertex
-        // current point is inside Bounds of X min
-        if (anItem.ypoly[anItem.points-1] >= screen.ymin)
-        {
-            // if the first point is inside the bounds copy this point straight into the temp[]
-            // copy existing point to temp point array
-            tempx[vertexCount] = anItem.xpoly[anItem.points-1];
-            tempy[vertexCount] = anItem.ypoly[anItem.points-1];
-            vertexCount++;                          // increment number of vertices in new poly
-
-            // if the X part of the second point is out of bounds X min
-            if (anItem.ypoly[0] < screen.ymin)
-            {
-                // going out of bounds
-                clipAxis = Y1min;
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, anItem.points-1, 0, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-        else if (anItem.ypoly[anItem.points-1] < screen.ymin)
-        {
-            // if the Y part of the second point is out of bounds Y min
-            if (anItem.ypoly[0] >= screen.ymin)
-            {
-                // comeing into bounds
-                clipAxis = Y2min;
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, anItem.points-1, 0, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }            
-        }
-
-
-    // copy new points to point arrays
-    for (int i=0; i<vertexCount; i++)
-    {
-        anItem.xpoly[i] = tempx[i];
-        anItem.ypoly[i] = tempy[i];
-    } // end for
-
-    // new vertex count
-    anItem.points = vertexCount;
-
-    } // end (anItem.points > 0)
-
-
-} // end ClipPolyYmin
-
-
-
-/**
- * The Sutherland-Hodgman Polygon-Clipping Algorithm goes through each point in the poly and clips
- *  against the screen limits adding new points where required
- * 
- * @param anItem
- * @param craft
- * @param screen
- */
 void ClipPolyYmax(WorldItem anItem, Craft craft, Screen screen) {
-//
-//    anObject.xpoly[i]
-//    anObject.ypoly[i]
-//    anObject.points
-    
-    final int POLY_POINTS    = 200;  // max number of points for each polygon    Polygon polygonStorage[] = new Polygon[POLYS];
-    boolean outBounds = false;                // init non-visable
-//    boolean turningPoint = false;                    // was a point added for the corner of the screen
-    int[] tempx = new int[POLY_POINTS];
-    int[] tempy = new int[POLY_POINTS];
-    int vertexCount = 0;                    // count of vertices in new poly
-    int clipAxis = 0, clipAxisPrevious;        // leftY, rightY, lowerX, upperX
-//    final int Y1min = 1, Y1max = 2, X1min = 4, X1max = 8, Y2min = 16, Y2max = 32, X2min = 64, X2max = 128;    // axis bounds flag
-//    Note: Y1=0 y2=max X1=0 X2=max  top left (x,y)=(0,0)
-
-    if (anItem.points > 0)
-    {
-
-    // CLIP AGANST Xmax
-    // first poly vertex to last-1 vertex
-    for (int vertex=0; vertex<(anItem.points-1); vertex++)
-    {
-        if (vertexCount >= POLY_POINTS)
-            System.out.println("ClipPolyYmax reached maximum POLY_POINTS");
-
-        clipAxisPrevious = clipAxis;
-        clipAxis = 0;
-
-        // current point is inside Bounds of X min
-        if (anItem.ypoly[vertex] <= screen.ymax)
-        {
-            // if the first point is inside the bounds copy this point straight into the temp[]
-            // copy existing point to temp point array
-            tempx[vertexCount] = anItem.xpoly[vertex];
-            tempy[vertexCount] = anItem.ypoly[vertex];
-            vertexCount++;                          // increment number of vertices in new poly
-
-            // if the X part of the second point is out of bounds X min create a new point at the intersection
-            if (anItem.ypoly[vertex+1] > screen.ymax)
-            {
-                clipAxis = Y1max; // was Y1max
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, vertex, vertex+1, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-        else if (anItem.ypoly[vertex] > screen.ymax)
-        {
-            // if the X part of the second point is out of bounds X min
-            if (anItem.ypoly[vertex+1] <= screen.ymax)
-            {
-                clipAxis = Y2max; //was X2max
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, vertex, vertex+1, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-            
-    } // end for        
-
-
-    // The last poly vertex and first poly vertex
-        // current point is inside Bounds of X max
-        if (anItem.ypoly[anItem.points-1] <= screen.ymax)
-        {
-            // if the first point is inside the bounds copy this point straight into the temp[]
-            // copy existing point to temp point array
-            tempx[vertexCount] = anItem.xpoly[anItem.points-1];
-            tempy[vertexCount] = anItem.ypoly[anItem.points-1];
-            vertexCount++;                          // increment number of vertices in new poly
-
-            // if the X part of the second point is out of bounds X max
-            if (anItem.xpoly[0] > screen.xmax)
-            {
-                clipAxis = Y1max; // was Y1max
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, anItem.points-1, 0, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }
-        }
-        else if (anItem.ypoly[anItem.points-1] > screen.ymax)
-        {
-            // if the X part of the second point is out of bounds X max
-            if (anItem.ypoly[0] <= screen.ymax)
-            {
-                clipAxis = Y2max; // was X2max
-
-                // get the new point where the craft is intersected
-                vertexCount = getIntersectPointScreen(anItem, craft, anItem.points-1, 0, vertexCount, tempx, tempy, clipAxis, screen);
-//                vertexCount++;                          // increment number of vertices in new poly
-            }            
-        }
-
-        // check for turning point between last and first points
-        if (vertexCount > 1)
-            vertexCount = checkForTurningPoint(anItem, vertexCount-1, 0, vertexCount, tempx, tempy, screen);
-
-
-    // copy new points to point arrays
-    for (int i=0; i<vertexCount; i++)
-    {
-        anItem.xpoly[i] = tempx[i];
-        anItem.ypoly[i] = tempy[i];
-    } // end for
-
-    // new vertex count
-    anItem.points = vertexCount;
-
-    } // end (anItem.points > 0)
-
-} // end ClipPolyYmax
+    clipPolyAgainstEdge(anItem, false, false, screen.ymax);
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -3686,21 +3121,16 @@ boolean ClipPoly3D(WorldItem anItem, double ClipPoint, int polyToClip) {
     {
         for (int i=0; i<vertexCount; i++)
         {
-            // SHOULD THESE BE MODIFIED? some points are shared with other polys
-            if (anItem.updated[i] != true) {
-                anItem.xpoints[i] = tempx[i];
-                anItem.ypoints[i] = tempy[i];
-                anItem.zpoints[i] = tempz[i];
-
-                // new vertex count
-                anItem.points = vertexCount;
-                
-                // don't let this point get updated again
-                anItem.updated[i] = true;
-            }
+            // xpoints/ypoints/zpoints are per-poly scratch copies, so always overwrite them
+            anItem.xpoints[i] = tempx[i];
+            anItem.ypoints[i] = tempy[i];
+            anItem.zpoints[i] = tempz[i];
+            anItem.updated[i] = true;
 //System.out.println("Run ClipPoly3D points=" + anItem.points);
             
         } // end for
+        // new vertex count
+        anItem.points = vertexCount;
     } // end if
 
     return(visable);        // is visable or not
@@ -3724,6 +3154,9 @@ boolean basicClipPoly3D(WorldItem anItem, double ClipPoint, int polyToClip) {
             visable = false;    // one point is visable
         } // end if
     } // end for
+
+    if (visable)
+        anItem.points = anItem.polylist[polyToClip][0];
 
     return(visable);        // is visable or not
 
@@ -3770,7 +3203,7 @@ public static double haversineDistance(double lat1, double lon1, double lat2, do
 //      debug = true;            // debug on
     
         // perform perspective transformation for all points on given the object.
-        for (int i=0; i<anObject.polylist[polyToPersp][0]; i++)
+        for (int i=0; i<anObject.points; i++)
         {
             if ((anObject.zpoints[i] < 1))
             {

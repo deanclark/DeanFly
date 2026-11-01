@@ -143,19 +143,11 @@ public class DeanFly extends JPanel implements ActionListener, ItemListener {
     static Thread mainExecutionThread = null;
     
 
-    public void mainInit() {
-        // DeanFly Debug Trace
-        //        debug = false;
-        //        boolean debug = true;
-        //        verboseDebug = false;
-        //        verboseDebug = true;
-        //        setLayout(new BorderLayout());
-
-        if (debug && verboseDebug) {
-            System.out.println("mainInit");
-        }
-
-        
+    /**
+     * Resolves the world data locations and loads crafts, land mass and land items.
+     * Needs no display, so it is also used by the headless tests.
+     */
+    public void loadWorld() {
         //hostURLparameter = "http://127.0.0.1/DeanFlyJava/";
         //hostURLparameter = "http://localhost:8084/DeanFly/";   // NetBeans Debug 4.1
         hostURLparameter = "";  // path could be hard coded here if need be
@@ -209,6 +201,22 @@ public class DeanFly extends JPanel implements ActionListener, ItemListener {
                 GraphPnl.objects[eachObject].sorted_list[i] = i;
             }
         }
+    }
+
+    public void mainInit() {
+        // DeanFly Debug Trace
+        //        debug = false;
+        //        boolean debug = true;
+        //        verboseDebug = false;
+        //        verboseDebug = true;
+        //        setLayout(new BorderLayout());
+
+        if (debug && verboseDebug) {
+            System.out.println("mainInit");
+        }
+
+        
+        loadWorld();
 
         // start with the Splash screen
 

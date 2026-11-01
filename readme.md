@@ -105,6 +105,14 @@ Or directly with Java after building:
 
 *     java -Xms1024m -cp build/classes/java/main DeanFly cubeWorld
 
+#### Tests (headless)
+
+*     ./gradlew test
+
+Runs the JUnit 5 tests with no window: both worlds are loaded, rendered off-screen and driven with flight keys, and the
+near-plane and screen clipping are checked (including walking forward with `w` then turning right with `d` in cubeWorld).
+`./gradlew build` runs them too.
+
 #### VS Code
 Open the folder in VS Code with the "Extension Pack for Java" installed. Use the **Run and Debug** panel
 ("DeanFly - islandWorld" / "DeanFly - cubeWorld"), or **Terminal > Run Task** for the Gradle build, run and Doxygen tasks.

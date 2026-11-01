@@ -19,6 +19,7 @@ Originally C++ (Watcom), ported to Java as a learning exercise. Plain Swing/AWT,
 ## Build / run (Gradle 9.8.2 wrapper, JDK 25 toolchain)
 - `./gradlew build` — compile + `build/libs/DeanFly.jar`
 - `./gradlew run -Pworld=islandWorld|cubeWorld` — play a world (default islandWorld)
+- `./gradlew test` — headless smoke + clipping tests (also run by `build`)
 - `./gradlew doxygen` — docs into `build/doxygen` (needs `doxygen` on PATH; Graphviz `dot` optional)
 - VS Code: `.vscode/launch.json` has one launch config per world; `.vscode/tasks.json` wraps the Gradle tasks.
 - `DeanFly.main` takes an optional first arg = world name (added during migration).
@@ -29,6 +30,9 @@ Originally C++ (Watcom), ported to Java as a learning exercise. Plain Swing/AWT,
 - Both worlds launch and run 15s+ with no exceptions in console (GUI play not visually verified by Claude).
 - 2026-11-01: Removed the Applet API dependency: `DeanFly` now extends `JPanel` (was `JApplet`); dropped the unused applet `getParameter` branch and `appletLanuch` flag. `web/*.html` applet pages are now obsolete (applets have not run in browsers for years). Both worlds still launch cleanly; `[removal]` warning gone.
 - 2026-11-01: Fixed deprecations in `GraphPnl`: `new URL(String)` -> `new URI(..).toURL()`; mouse handlers use `getButton()` / `getModifiersEx()` + `BUTTON1_DOWN_MASK` instead of `getModifiers()`/`BUTTON*_MASK`. Both worlds still launch cleanly. Mouse-button cheat controls not manually clicked-tested.
+- 2026-11-01: Added headless tests (JUnit 5, `./gradlew test`, `src/test/java`): `WorldSmokeTest` (both worlds load, render, survive controls) and `ClippingTest` (near-plane + screen clip unit tests, plus cubeWorld w-then-d scene regression comparing screen clipping on vs off pixel-by-pixel). `WorldHarness` drives the static-heavy engine without a window. Needed small refactors: `DeanFly.loadWorld()` (extracted from `mainInit`) and `GraphPnl.drawScene(Graphics)` (extracted from `update`). Test JVM needs 2g heap.
+- 2026-11-01: Fixed the cubeWorld visual clipping glitch (streaks after `w` then `d`). Root causes in `GraphPnl`: (1) `getIntersectPoint` extrapolated to z=0 not the clip plane (and `makeBigger` distorted slopes); (2) `ClipPoly3D` skipped copying vertices whose stale `updated[]` flag was set, so an added vertex was lost; (3) `WorldPerspective` projected only the original vertex count, leaving added vertices stale; (4) `basicClipPoly3D` never set `points`; (5) screen clipper (`getIntersectPointScreen` + four `ClipPoly*` copies with corner heuristics) was replaced by one Sutherland-Hodgman `clipPolyAgainstEdge`. Screen-clip-on vs off now differs by ~20-200 rounding pixels instead of up to ~9000.
+- Known engine oddity (not changed): production `screen.xmax/ymax` = full monitor size while the image is monitor/3 and the projection is centred on (160,100), so the picture is not centred. Left alone; tests cover both production and clip-rect==image.
 - 2026-11-01: Ran `doxygen -u` on `lld.doxyfile` (obsolete tags removed, now 1.18 format), hand-repaired the mangled `ALIASES`, set `PAPER_TYPE = a4`, escaped `<Subject>` in `lld.dox`. Doxygen config produces no config warnings; 2 harmless 'image file name is ambiguous' warnings remain (images also exist under the checked-in `Doxygen/html`). Checked-in `Doxygen/html`/`rtf` output was NOT regenerated.
 - Doxygen 1.18 (winget) builds the docs; Gradle `doxygen` task writes to `build/doxygen` so tracked `Doxygen/html` isn't churned.
 
@@ -41,4 +45,4 @@ Originally C++ (Watcom), ported to Java as a learning exercise. Plain Swing/AWT,
 - Duplicate world data under `web/` and `web/WEB-INF` plus many `.bak` files.
 
 ## Next steps / ideas
-- Optional: add smoke test that loads both worlds headless.
+- Optional: make the view size/centre consistent (projection hard-codes 160,100; clip rect uses full screen size).
