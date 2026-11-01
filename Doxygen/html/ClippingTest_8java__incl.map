@@ -1,0 +1,19 @@
+<map id="ClippingTest.java" name="ClippingTest.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="672,5,794,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,88,208,115"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="670,26,471,50,220,83,190,87,189,82,219,77,471,45,675,26"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="232,88,429,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="675,32,410,87,409,82,669,32"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="454,88,562,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="701,32,558,85,557,80,695,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="586,88,705,115"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="722,32,671,80,669,75,717,33"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="729,88,913,115"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="748,30,799,78,794,77,746,35"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="938,88,1094,115"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="778,30,959,83,954,83,777,35"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="1118,80,1276,123"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="794,26,932,47,1106,79,1100,79,931,52,794,31"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1300,80,1508,123"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="795,23,1007,44,1287,80,1282,80,1007,49,794,28"/>
+</map>

@@ -132,6 +132,8 @@ Open the folder in VS Code with the "Extension Pack for Java" installed. Use the
 
 Output goes to `build/doxygen/html/index.html` (the checked-in `Doxygen/html` is left untouched).
 
+To refresh the checked-in copy (`Doxygen/html`, `Doxygen/rtf`), delete those two folders and run `doxygen lld.doxyfile` from inside the `Doxygen` folder.
+
 #### Eclipse / NetBeans
 The old Ant/NetBeans build has been removed. Import the project into Eclipse or NetBeans as a Gradle project.
 

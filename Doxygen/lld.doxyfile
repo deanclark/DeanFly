@@ -1077,7 +1077,10 @@ RECURSIVE              = YES
 # run.
 
 EXCLUDE                = doxygen \
-                         doc
+                         doc \
+                         html \
+                         rtf \
+                         latex
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -1127,7 +1130,7 @@ EXAMPLE_RECURSIVE      = NO
 # that contain images that are to be included in the documentation (see the
 # \image command).
 
-IMAGE_PATH             = ./
+IMAGE_PATH             = ./images
 
 # The INPUT_FILTER tag can be used to specify a program that Doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program

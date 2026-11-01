@@ -15,7 +15,7 @@ Draft DeanFly Simulator 01.00.00.02 (02-June-2014)
 
 @subsection sec_1_1	1.1	Overview
 
-	The DeanFly Simulator has been implemented to demonstrate the terms used with the simulator comunity.
+	The DeanFly Simulator has been implemented to demonstrate the terms used with the simulator community.
 	
 	This tool is intended for use by students studying 3D Computer Graphics. 
 	
@@ -43,7 +43,7 @@ Requirements:
 	This document is designed to be formatted as a html document for viewing via
 	a web browser. It is automatically generated using Doxygen.
 	
-	It is intended for use by developers and users as a user guide.  JavaDoc is used for all developer documention.
+	It is intended for use by developers and users as a user guide.  JavaDoc is used for all developer documentation.
 
 	This document is split into several sections, these are manually generated sections
 	and several automatically generated sections that detail the methods available.
@@ -62,7 +62,7 @@ Requirements:
 @subsection sec_3_1	3.1	Description
 
 	The aim of the DeanFly Simulator is to provide a simple means of visually seeing the impact
-	of various techniqes used with in 3D Graphics to improve the perception of 3D within the 
+	of various techniques used with in 3D Graphics to improve the perception of 3D within the 
 	constrains of a 2d display..
 	
 	Usage,
@@ -140,7 +140,7 @@ Requirements:
 
 @subsection sec_8_1	8.1	System Resource Usage
 
-	Methods can be run simultaneously so could cause substantial impact to loacl PC and 
+	Methods can be run simultaneously so could cause substantial impact to local PC and 
 	Web Server performance, so use of this tool should be restricted to outside of business 
 	hours..
 
@@ -157,8 +157,8 @@ Requirements:
 
 @section sec_9		9.	Reliability
 
-	The methods have been design to incorporate a standard interface to allow the 
-	reporting of failures during test.
+	The methods have been designed to incorporate a standard interface to allow the 
+	reporting failures during test.
 	
 	It is the responsibility of the test developer to ensure this mechanism is implemented,
 	to allow corrective action at the earliest opportunity. 
@@ -176,12 +176,12 @@ Requirements:
 
 @subsection sec_10_2	10.2	Subscriber
 	
-	The DeanFly Simulator connects to a web site in order to obtain object definition files.  
+	The DeanFly Simulator connects to a web site to obtain object definition files.  
 	Firewall and Proxy Server details must be made available to the tool.
 	
-		- Subscriber Customisation Information
+		- Subscriber Customization  Information
 		
-	@note The test developer can utilise locally stored files rather than web based files in order to
+	@note: The test developer can utilize locally stored files rather than web based files to
 	reduce network traffic during debug and development.
 
 
@@ -192,7 +192,7 @@ Requirements:
 
 @subsection sec_11_2	11.2	Subsystem Initialisation
 
-	DeanFly Simulator is a dynamic object and as such needs specific initialisation either from configuration files or default demonstrator files.
+	DeanFly Simulator is a dynamic object and as such need's specific initialisation either from configuration files or default demonstrator files.
 	
 
 @subsection sec_11_3	11.3	Subsystem Interface

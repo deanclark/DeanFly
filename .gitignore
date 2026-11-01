@@ -1,8 +1,6 @@
-/OBJECTS/
 /build/
-/dist/
-/bin/
 /.gradle/
+/bin/
 /.vscode/*
 !/.vscode/settings.json
 !/.vscode/launch.json
