@@ -138,6 +138,5 @@ The old Ant/NetBeans build has been removed. Import the project into Eclipse or 
 #### Java version notes
 The code compiles on JDK 25 with no removal warnings. The former `JApplet` base class has been replaced by `JPanel`, so
 the Applet API (removed from the JDK in version 26) is no longer used. Java applets can no longer run (browsers dropped the plugin, and the Applet API is removed from the JDK in version 26),
-so the applet HTML/JSP pages under `web/` are obsolete and are not used by the build. Run the game as a desktop application
-with the commands above.
+so the old applet web pages (`web/`) have been removed. Run the game as a desktop application with the commands above.
 See `CLAUDE.md` for details.
