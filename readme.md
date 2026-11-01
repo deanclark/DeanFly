@@ -119,6 +119,6 @@ Output goes to `build/doxygen/html/index.html` (the checked-in `Doxygen/html` is
 The old Ant/NetBeans build has been removed. Import the project into Eclipse or NetBeans as a Gradle project.
 
 #### Java version notes
-The code compiles unchanged on JDK 25. `DeanFly` still extends `javax.swing.JApplet`, which is deprecated for removal
-and is expected to be removed from the JDK in version 26, so that class must be refactored before moving beyond JDK 25.
+The code compiles on JDK 25 with no removal warnings. The former `JApplet` base class has been replaced by `JPanel`, so
+the Applet API (removed from the JDK in version 26) is no longer used. The applet HTML pages under `web/` are obsolete.
 See `CLAUDE.md` for details.

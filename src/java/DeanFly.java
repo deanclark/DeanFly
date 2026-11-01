@@ -74,7 +74,6 @@ import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.*;
-import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -83,7 +82,7 @@ import javax.swing.JPanel;
  * @author dean.clark
  *
  */
-public class DeanFly extends JApplet implements ActionListener, ItemListener {
+public class DeanFly extends JPanel implements ActionListener, ItemListener {
     static GraphPnl mainPanel;
 
     // controlPanel used for testing the print-to-printer function
@@ -98,7 +97,6 @@ public class DeanFly extends JApplet implements ActionListener, ItemListener {
     public static String craftType;
 
     // DeanFly Debug Trace
-    static boolean appletLanuch = false;
     static boolean debug = false, verboseDebug = false;
         static boolean applicationMode = false;
 
@@ -121,14 +119,6 @@ public class DeanFly extends JApplet implements ActionListener, ItemListener {
         controlPanel = new JPanel(); // 2007 JPanel
         add("South", controlPanel);
         
-        if(appletLanuch)
-        {
-                hostURLparameter = getParameter("homeServerPath");
-                // DC-Debug: Nothing is done with this Debug Trace parameter yet
-                globalDebug = getParameter("verbose");
-                worldName = getParameter("world");
-        }
-
         worldLocation = new String(hostURLparameter.concat(worldName));    
         serverObjects = new String(worldLocation.concat("/objectsnew/"));    
         landMass = new String(worldLocation.concat("/landMass.txt"));    

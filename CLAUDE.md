@@ -11,7 +11,7 @@ Originally C++ (Watcom), ported to Java as a learning exercise. Plain Swing/AWT,
 - Source files use CRLF line endings; preserve them when editing (avoid tools that normalise EOLs).
 
 ## Layout
-- `src/java/` — all source (default package): `DeanFly` (JApplet + `main`), `GraphPnl` (4.8k-line engine/renderer/loader), `Craft`, `WorldItem`, `Picture`, `Screen`, `TestPanel`.
+- `src/java/` — all source (default package): `DeanFly` (JPanel + `main`), `GraphPnl` (4.8k-line engine/renderer/loader), `Craft`, `WorldItem`, `Picture`, `Screen`, `TestPanel`.
 - `islandWorld/`, `cubeWorld/` — world data (craftType, landMass, landItems, objects). Loaded **relative to the working directory**, so run from the repo root.
 - `web/` — legacy NetBeans web app (applet HTML/JSP, copy of world data). Not used by the Gradle build.
 - `Doxygen/` — `lld.doxyfile`, `lld.dox`, checked-in generated `html/` and `rtf/`.
@@ -27,10 +27,11 @@ Originally C++ (Watcom), ported to Java as a learning exercise. Plain Swing/AWT,
 - 2026-11-01: Replaced Ant/NetBeans (`build.xml`, `nbproject/`) with Gradle (`build.gradle`, `settings.gradle`, wrapper). Eclipse `.classpath/.project` left in place.
 - Toolchain set to Java 25 (latest LTS, installed locally). Source compiled unchanged on JDK 25 — no code changes needed except the world arg.
 - Both worlds launch and run 15s+ with no exceptions in console (GUI play not visually verified by Claude).
+- 2026-11-01: Removed the Applet API dependency: `DeanFly` now extends `JPanel` (was `JApplet`); dropped the unused applet `getParameter` branch and `appletLanuch` flag. `web/*.html` applet pages are now obsolete (applets have not run in browsers for years). Both worlds still launch cleanly; `[removal]` warning gone.
 - Doxygen 1.18 (winget) builds the docs; Gradle `doxygen` task writes to `build/doxygen` so tracked `Doxygen/html` isn't churned.
 
 ## Blockers / obsolete items for newer Java
-- **Applet API**: `DeanFly extends javax.swing.JApplet`. Deprecated for removal since 9; build already emits a `[removal]` warning on 25. JEP 504 removes the Applet API in JDK 26, so this **will stop compiling on 26+** unless `DeanFly` is refactored to extend `JPanel`/plain class (only `init()`/`getParameter` use applet features). `web/*.html` applet embedding has not worked in any browser for years.
+- **Applet API: resolved.** No longer blocks JDK 26+. Remaining javac warnings are plain deprecations (`new URL(String)`, `InputEvent.getModifiers`/`BUTTON*_MASK`) in `GraphPnl`; not removals, but worth modernising.
 - `GraphPnl extends java.awt.Panel` — works, but legacy AWT; fine for now.
 - No third-party libraries, so nothing to upgrade. README mentioned JUnit/Maven (`mvn eclipse:eclipse`) — no tests or pom exist.
 - `DeanFly.mainInit()` points at dead host `www.dean.seetech.com` when `GraphPnl.runlocal` is false (it is true by default).
@@ -38,6 +39,5 @@ Originally C++ (Watcom), ported to Java as a learning exercise. Plain Swing/AWT,
 - Duplicate world data under `web/` and `web/WEB-INF` plus many `.bak` files.
 
 ## Next steps / ideas
-- Optional: refactor off JApplet to unblock JDK 26+ (small change).
 - Optional: `doxygen -u` to modernise `lld.doxyfile`.
 - Optional: add smoke test that loads both worlds headless.
