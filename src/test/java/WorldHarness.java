@@ -30,6 +30,12 @@ final class WorldHarness {
         GraphPnl.clipScreen = true;
         GraphPnl.mapOn = false;
         GraphPnl.displayClipMap = false;
+        GraphPnl.wireframe = false;
+        GraphPnl.hiddenSurfaces = false;
+        GraphPnl.flipped = false;
+        GraphPnl.perspective = true;
+        GraphPnl.instumentDisplay = true;
+        GraphPnl.keyHelpDisplay = false;
 
         DeanFly.worldName = world;
         DeanFly deanFly = new DeanFly();

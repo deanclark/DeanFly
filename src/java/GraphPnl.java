@@ -3789,7 +3789,7 @@ void drawObject(Graphics g, WorldItem anObject, Craft viewer, boolean flip) {
             displayClipMap = !displayClipMap; // 'M' 2D Clipping map on/off
         }
 
-        if (evt.getKeyChar() == 'b') wireframe = !wireframe; // 'w' wireframe polys on/off
+        if (evt.getKeyChar() == 'b') wireframe = !wireframe; // 'b' wireframe polys on/off
 
         // cheat keys
         if (evt.getKeyChar() == 'N') crafts[currentCraft].eyeZ += 20.0;    // 'N' increase z direction by 100 meters
@@ -3847,13 +3847,13 @@ void drawObject(Graphics g, WorldItem anObject, Craft viewer, boolean flip) {
         g.setColor(Color.black);
         
         // Pitch
-        g.drawString("Pitch",col1,20);            g.drawString(": 2/8",val1,20);    // text
+        g.drawString("Pitch/Walk",col1,20);        g.drawString(": w/s",val1,20);    // text
 
         // Yaw
-        g.drawString("Yaw",col2,20);                g.drawString(": 1/3",val2,20);    // text
+        g.drawString("Start/Continue",col2,20);    g.drawString(": S/C",val2,20);    // text
 
         // Roll
-        g.drawString("Roll",col1,30);            g.drawString(": 4/6",val1,30);    // text
+        g.drawString("Roll/Turn",col1,30);        g.drawString(": a/d",val1,30);    // text
 
         // Altitude
         g.drawString("Runway 1/2",col2,30);        g.drawString(": [/]",val2,30);    // text
@@ -3891,7 +3891,7 @@ void drawObject(Graphics g, WorldItem anObject, Craft viewer, boolean flip) {
         if (wireframe)
             g.setColor(Color.red);
         //  This Help Menu
-        g.drawString("Wireframe", col1,70);        g.drawString(": w", val1,70);    // text
+        g.drawString("Wireframe", col1,70);        g.drawString(": b", val1,70);    // text
         g.setColor(Color.black);
 
         if (!clip)
@@ -3913,13 +3913,13 @@ void drawObject(Graphics g, WorldItem anObject, Craft viewer, boolean flip) {
         if (!hiddenSurfaces)
             g.setColor(Color.red);
         //  This Help Menu
-        g.drawString("Surface removal", col1,90);        g.drawString(": H", val1,90);    // text
+        g.drawString("Surface removal", col1,90);        g.drawString(": h", val1,90);    // text
         g.setColor(Color.black);
 
         if (keyHelpDisplay)
             g.setColor(Color.red);
         //  This Help Menu
-        g.drawString("This menu", col2,90);        g.drawString(": H/h/K/k", val2,90);    // text
+        g.drawString("This menu", col2,90);        g.drawString(": K/k", val2,90);    // text
         g.setColor(Color.black);
 
     } // end keyHelp

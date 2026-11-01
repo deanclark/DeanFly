@@ -11,38 +11,46 @@ View from Field 1:
 Controls
 -----------
 
-* S	Start
+* S	Start (from the title screen)
 * Q	Quit (Second Q will exit the application)
 * C	Continue following a quit
+
+Aircraft (islandWorld):
 
 * +/-	Speed
 * a	Roll Left
 * d	Roll Right
 * s	Nose Up
-* w	Nose Down 
-* 1	Yaw Left
-* 3	Yaw Right
+* w	Nose Down
+
+Walker (cubeWorld):
+
+* w	Step back
+* s	Step forward
+* a	Turn left
+* d	Turn right
+
+The numeric keypad 2/4/6/8 also works for pitch and roll (aircraft) or walk and turn (walker).
 
 * i	Instrumentation
+* k	Key help (this list on screen)
 * m	map
 * M	Clip Map
-* h	Help
-
 
 
 Cheat Controls
 -----------
-* k	Cheat Key Help
-* '.'	Reset to Air Field 1
+* '.'	High above the islands
+* '[' 	Back to the start position
 * v or ]	Scroll between each view / vehicle
 * N	North
 * E	East
 * S	South
 * W	West
 * (	Decrease altitude
-* )	Decrease altitude
+* )	Increase altitude
 
-* Mouse Left button	move to field 1 takeoff position
+* Mouse Left button	move to start position
 * Mouse Right button	move to in flight position
 * Mouse Center button	High Altitude, nose down
 
@@ -53,7 +61,8 @@ Cheat Controls
 * c	Clipping on/off
 * C	Screen Clipping on/off
 * h	Hidden Surface Removal
-* ?	Surface Sort
+* f	Flip the view
+* p	Perspective on/off
 
 
 Map Views
@@ -128,5 +137,7 @@ The old Ant/NetBeans build has been removed. Import the project into Eclipse or 
 
 #### Java version notes
 The code compiles on JDK 25 with no removal warnings. The former `JApplet` base class has been replaced by `JPanel`, so
-the Applet API (removed from the JDK in version 26) is no longer used. The applet HTML pages under `web/` are obsolete.
+the Applet API (removed from the JDK in version 26) is no longer used. Java applets can no longer run (browsers dropped the plugin, and the Applet API is removed from the JDK in version 26),
+so the applet HTML/JSP pages under `web/` are obsolete and are not used by the build. Run the game as a desktop application
+with the commands above.
 See `CLAUDE.md` for details.
