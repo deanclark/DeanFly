@@ -388,6 +388,24 @@ class GraphPnl extends Panel //JPanel for KeyListener 2007
 
 
 /**
+ * Sizes the view for the given monitor size: the view (and off screen image) is the monitor size divided by
+ * SCREEN_SCALER, the screen clip rectangle is that view less a 2 pixel border, and the perspective projection
+ * is centred on the middle of the view (see WorldPerspective).
+ */
+static void configureViewport(Craft viewer, int monitorWidth, int monitorHeight) {
+    viewer.windowWidth  = monitorWidth  / SCREEN_SCALER;
+    viewer.windowHeight = monitorHeight / SCREEN_SCALER;
+
+    screen.xmin = 2;                    // screen dimensions
+    screen.ymin = 2;
+    screen.xmax = viewer.windowWidth  - 2;
+    screen.ymax = viewer.windowHeight - 2;
+    screen.xmid = viewer.windowWidth  / 2;
+    screen.ymid = viewer.windowHeight / 2;
+}
+
+
+/**
  * Draws the background, islands, world objects and (optionally) the 2D map into the given graphics.
  * Used by update() and by the headless tests.
  */
@@ -446,12 +464,7 @@ class GraphPnl extends Panel //JPanel for KeyListener 2007
                 offscreen = createImage(craft.windowWidth, craft.windowHeight);
             }
 
-            screen.xmin = 2;                    // screen dimensions
-            screen.ymin = 2;
-            screen.xmax = d.width - 2;
-            screen.ymax = d.height - 2;
-            screen.xmid = screen.xmax / 2;
-            screen.ymid = screen.ymax / 2;
+            configureViewport(crafts[currentCraft] != null ? crafts[currentCraft] : craft, d.width, d.height);
 
             offscreensize = d;
             offgraphics = offscreen.getGraphics();
@@ -3202,6 +3215,10 @@ public static double haversineDistance(double lat1, double lon1, double lat2, do
 //      boolean debug = false;
 //      debug = true;            // debug on
     
+        // the viewer looks at the middle of the view
+        final double centreX = viewer.windowWidth  / 2.0;
+        final double centreY = viewer.windowHeight / 2.0;
+
         // perform perspective transformation for all points on given the object.
         for (int i=0; i<anObject.points; i++)
         {
@@ -3211,14 +3228,15 @@ public static double haversineDistance(double lat1, double lon1, double lat2, do
             }
 
             // perform perspective
-            anObject.xtemp[i] =    ((FOCAL_DISTANCE * anObject.xpoints[i]) / anObject.zpoints[i] + 160);
-            if (flip)                                    // was 100 below
-                anObject.ytemp[i] = viewer.windowHeight -    (100 - ((FOCAL_DISTANCE * anObject.ypoints[i]) / anObject.zpoints[i]));
+            // the view centre was hard coded as (160,100), the middle of the original 320x200 screen
+            anObject.xtemp[i] =    ((FOCAL_DISTANCE * anObject.xpoints[i]) / anObject.zpoints[i] + centreX);
+            if (flip)
+                anObject.ytemp[i] = viewer.windowHeight -    (centreY - ((FOCAL_DISTANCE * anObject.ypoints[i]) / anObject.zpoints[i]));
             else
-                anObject.ytemp[i] =                            (100 - ((FOCAL_DISTANCE * anObject.ypoints[i]) / anObject.zpoints[i]));
+                anObject.ytemp[i] =                            (centreY - ((FOCAL_DISTANCE * anObject.ypoints[i]) / anObject.zpoints[i]));
 
             if (verboseDebug)
-                System.out.println("flip with = " + (viewer.windowHeight -    (100 - ((FOCAL_DISTANCE * anObject.ypoints[i]) / anObject.zpoints[i]))) + " without = " + (100 - ((FOCAL_DISTANCE * anObject.ypoints[i]) / anObject.zpoints[i])));
+                System.out.println("flip with = " + anObject.ytemp[i]);
 
         } // end for
 

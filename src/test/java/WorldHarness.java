@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
  * every {@link #load(String)} resets that state before loading a world.
  */
 final class WorldHarness {
-    static final int SCREEN_W = 1920, SCREEN_H = 1080;      // the "monitor" the production clip rectangle is derived from
+    static final int SCREEN_W = 1920, SCREEN_H = 1080;      // the "monitor" the view size is derived from
     static final int IMG_W = SCREEN_W / GraphPnl.SCREEN_SCALER;
     static final int IMG_H = SCREEN_H / GraphPnl.SCREEN_SCALER;
 
@@ -36,19 +36,7 @@ final class WorldHarness {
         deanFly.loadWorld();
         panel = new GraphPnl(deanFly);
 
-        Craft c = GraphPnl.crafts[GraphPnl.currentCraft];
-        c.windowWidth = IMG_W;
-        c.windowHeight = IMG_H;
-        setClipRectangle(2, 2, SCREEN_W - 2, SCREEN_H - 2);   // same values update() uses
-    }
-
-    static void setClipRectangle(int xmin, int ymin, int xmax, int ymax) {
-        GraphPnl.screen.xmin = xmin;
-        GraphPnl.screen.ymin = ymin;
-        GraphPnl.screen.xmax = xmax;
-        GraphPnl.screen.ymax = ymax;
-        GraphPnl.screen.xmid = xmax / 2;
-        GraphPnl.screen.ymid = ymax / 2;
+        GraphPnl.configureViewport(craft(), SCREEN_W, SCREEN_H);   // same set up update() does
     }
 
     static Craft craft() {

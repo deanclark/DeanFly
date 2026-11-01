@@ -189,6 +189,43 @@ class ClippingTest {
         }
     }
 
+    // ---- view centring -------------------------------------------------------------------------
+
+    @Test
+    void screenClipRectangleMatchesTheViewAndIsCentred() {
+        WorldHarness.load("cubeWorld");
+        Screen screen = GraphPnl.screen;
+        assertEquals(WorldHarness.IMG_W - 2, screen.xmax, "clip rectangle should end at the view's right edge");
+        assertEquals(WorldHarness.IMG_H - 2, screen.ymax, "clip rectangle should end at the view's bottom edge");
+        assertEquals(WorldHarness.IMG_W - screen.xmax, screen.xmin, "left and right borders differ");
+        assertEquals(WorldHarness.IMG_H - screen.ymax, screen.ymin, "top and bottom borders differ");
+        assertEquals(WorldHarness.IMG_W / 2, screen.xmid);
+        assertEquals(WorldHarness.IMG_H / 2, screen.ymid);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"islandWorld", "cubeWorld"})
+    void aPointStraightAheadProjectsToTheMiddleOfTheView(String world) {
+        WorldHarness.load(world);
+        WorldItem item = poly(new double[][] {{0, 0, 500}, {0, 0, 900}, {0, 0, 2000}});
+        item.points = 3;
+        WorldHarness.panel.WorldPerspective(item, WorldHarness.craft(), 0, false);
+        for (int i = 0; i < 3; i++) {
+            assertEquals(WorldHarness.IMG_W / 2.0, item.xtemp[i], 1e-9, "x of point " + i);
+            assertEquals(WorldHarness.IMG_H / 2.0, item.ytemp[i], 1e-9, "y of point " + i);
+        }
+    }
+
+    @Test
+    void pointsEitherSideOfTheViewerProjectSymmetricallyAboutTheCentre() {
+        WorldHarness.load("cubeWorld");
+        WorldItem item = poly(new double[][] {{-300, 200, 1000}, {300, -200, 1000}});
+        item.points = 2;
+        WorldHarness.panel.WorldPerspective(item, WorldHarness.craft(), 0, false);
+        assertEquals(WorldHarness.IMG_W, item.xtemp[0] + item.xtemp[1], 1e-9, "x not mirrored about the centre");
+        assertEquals(WorldHarness.IMG_H, item.ytemp[0] + item.ytemp[1], 1e-9, "y not mirrored about the centre");
+    }
+
     // ---- whole scene -------------------------------------------------------------------------
 
     static int diffPixels(BufferedImage a, BufferedImage b) {
@@ -213,13 +250,10 @@ class ClippingTest {
      * should match apart from a few rounding pixels on the clip edges. Before the clipping fixes, turning
      * right after walking forward in cubeWorld produced streaks across the ceiling (thousands of pixels).
      */
-    @ParameterizedTest
-    @ValueSource(strings = {"production", "clipRectangleEqualsImage"})
-    void cubeWorldWalkForwardThenTurnRightClipsCleanly(String clipRectangle) {
+    @Test
+    void cubeWorldWalkForwardThenTurnRightClipsCleanly() {
         WorldHarness.load("cubeWorld");
         WorldHarness.start();
-        if (clipRectangle.equals("clipRectangleEqualsImage"))
-            WorldHarness.setClipRectangle(2, 2, WorldHarness.IMG_W - 2, WorldHarness.IMG_H - 2);
 
         final int allowedDifferentPixels = WorldHarness.IMG_W * WorldHarness.IMG_H / 400;   // 0.25%
         WorldHarness.keys('w', 6);
