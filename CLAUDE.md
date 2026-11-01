@@ -29,6 +29,7 @@ Originally C++ (Watcom), ported to Java as a learning exercise. Plain Swing/AWT,
 - Both worlds launch and run 15s+ with no exceptions in console (GUI play not visually verified by Claude).
 - 2026-11-01: Removed the Applet API dependency: `DeanFly` now extends `JPanel` (was `JApplet`); dropped the unused applet `getParameter` branch and `appletLanuch` flag. `web/*.html` applet pages are now obsolete (applets have not run in browsers for years). Both worlds still launch cleanly; `[removal]` warning gone.
 - 2026-11-01: Fixed deprecations in `GraphPnl`: `new URL(String)` -> `new URI(..).toURL()`; mouse handlers use `getButton()` / `getModifiersEx()` + `BUTTON1_DOWN_MASK` instead of `getModifiers()`/`BUTTON*_MASK`. Both worlds still launch cleanly. Mouse-button cheat controls not manually clicked-tested.
+- 2026-11-01: Ran `doxygen -u` on `lld.doxyfile` (obsolete tags removed, now 1.18 format), hand-repaired the mangled `ALIASES`, set `PAPER_TYPE = a4`, escaped `<Subject>` in `lld.dox`. Doxygen config produces no config warnings; 2 harmless 'image file name is ambiguous' warnings remain (images also exist under the checked-in `Doxygen/html`). Checked-in `Doxygen/html`/`rtf` output was NOT regenerated.
 - Doxygen 1.18 (winget) builds the docs; Gradle `doxygen` task writes to `build/doxygen` so tracked `Doxygen/html` isn't churned.
 
 ## Blockers / obsolete items for newer Java
@@ -36,9 +37,8 @@ Originally C++ (Watcom), ported to Java as a learning exercise. Plain Swing/AWT,
 - `GraphPnl extends java.awt.Panel` — works, but legacy AWT; fine for now.
 - No third-party libraries, so nothing to upgrade. README mentioned JUnit/Maven (`mvn eclipse:eclipse`) — no tests or pom exist.
 - `DeanFly.mainInit()` points at dead host `www.dean.seetech.com` when `GraphPnl.runlocal` is false (it is true by default).
-- Doxyfile (v1.8.7 format) has obsolete tags and malformed `ALIASES`; still builds. `Doxygen/warning.log` is stale (old Windows path).
+- Doxyfile modernised (see decisions log); `Doxygen/warning.log` is stale (old Windows path).
 - Duplicate world data under `web/` and `web/WEB-INF` plus many `.bak` files.
 
 ## Next steps / ideas
-- Optional: `doxygen -u` to modernise `lld.doxyfile`.
 - Optional: add smoke test that loads both worlds headless.
