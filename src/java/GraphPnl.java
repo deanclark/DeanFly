@@ -2503,7 +2503,7 @@ public static BufferedReader readUrlOrLocalFile(String objectName)
         
         if(objectName.contains("http"))
         {
-                URL url = new URL(objectName);
+                URL url = new java.net.URI(objectName).toURL();
                 in = new BufferedReader(new InputStreamReader(url.openStream()));
         }
         else
@@ -2518,8 +2518,8 @@ public static BufferedReader readUrlOrLocalFile(String objectName)
                 System.err.println("Error: readLocalFile() " + e.getMessage());
             }
         }
-    } catch (java.net.MalformedURLException e) {
-        System.out.println(" MalformedURLException in loadObject!\n");
+    } catch (java.net.MalformedURLException | java.net.URISyntaxException | IllegalArgumentException e) {
+        System.out.println(" Malformed URL in loadObject!\n");
     } catch (java.io.IOException e) {
         System.out.println("IOException in loadObject!\n");
     }
@@ -4638,7 +4638,7 @@ public void draw2DMap(WorldItem allObjects[], Graphics g, Craft viewer) {
             System.out.println("mousePressed - Begin");
         
         addMouseMotionListener(this);
-        int modifiers = e.getModifiers();
+        int button = e.getButton();
 
 //        if (debug)
 //            System.out.println(MouseEvent.MOUSE_PRESSED + " Button1:" + MouseEvent.BUTTON1_MASK + " Button2:" + MouseEvent.BUTTON2_MASK + modifiers);
@@ -4648,7 +4648,7 @@ public void draw2DMap(WorldItem allObjects[], Graphics g, Craft viewer) {
         // find the closest Action to this mouse event
 
         // left button    
-        if ((modifiers & MouseEvent.BUTTON1_MASK) == MouseEvent.BUTTON1_MASK) {
+        if (button == MouseEvent.BUTTON1) {
             if(crafts[currentCraft] != null)
             {
                 initAircraftNew(crafts[currentCraft]);
@@ -4658,7 +4658,7 @@ public void draw2DMap(WorldItem allObjects[], Graphics g, Craft viewer) {
         }
 
         // middle button    
-        if ((modifiers & MouseEvent.BUTTON2_MASK) == MouseEvent.BUTTON2_MASK) {
+        if (button == MouseEvent.BUTTON2) {
             if(crafts[currentCraft] != null)
             {
                 crafts[currentCraft].Speed =100.1;          // move to somewhere in flight
@@ -4668,7 +4668,7 @@ public void draw2DMap(WorldItem allObjects[], Graphics g, Craft viewer) {
         }
         
         // right button    
-        if ((modifiers & MouseEvent.BUTTON3_MASK) == MouseEvent.BUTTON3_MASK) {
+        if (button == MouseEvent.BUTTON3) {
             if(crafts[currentCraft] != null)
             {
                 // re-init craft
@@ -4685,9 +4685,7 @@ public void draw2DMap(WorldItem allObjects[], Graphics g, Craft viewer) {
 
     public void mouseReleased(MouseEvent e) {
         removeMouseMotionListener(this);
-        int modifiers = e.getModifiers();
-
-        if ((modifiers & MouseEvent.BUTTON2_MASK) == MouseEvent.BUTTON2_MASK) {
+        if (e.getButton() == MouseEvent.BUTTON2) {
             //optionsMenu.hide();
         }
 
@@ -4707,10 +4705,8 @@ public void draw2DMap(WorldItem allObjects[], Graphics g, Craft viewer) {
 
 
     public void mouseDragged(MouseEvent e) {
-        int modifiers = e.getModifiers();
-
         // left button    
-        if ((modifiers & MouseEvent.BUTTON1_MASK) == MouseEvent.BUTTON1_MASK) {
+        if ((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0) {
             // move the chosen node to the mouse pointer
         }
         repaint();

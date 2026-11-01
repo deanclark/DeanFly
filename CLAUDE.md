@@ -28,10 +28,11 @@ Originally C++ (Watcom), ported to Java as a learning exercise. Plain Swing/AWT,
 - Toolchain set to Java 25 (latest LTS, installed locally). Source compiled unchanged on JDK 25 — no code changes needed except the world arg.
 - Both worlds launch and run 15s+ with no exceptions in console (GUI play not visually verified by Claude).
 - 2026-11-01: Removed the Applet API dependency: `DeanFly` now extends `JPanel` (was `JApplet`); dropped the unused applet `getParameter` branch and `appletLanuch` flag. `web/*.html` applet pages are now obsolete (applets have not run in browsers for years). Both worlds still launch cleanly; `[removal]` warning gone.
+- 2026-11-01: Fixed deprecations in `GraphPnl`: `new URL(String)` -> `new URI(..).toURL()`; mouse handlers use `getButton()` / `getModifiersEx()` + `BUTTON1_DOWN_MASK` instead of `getModifiers()`/`BUTTON*_MASK`. Both worlds still launch cleanly. Mouse-button cheat controls not manually clicked-tested.
 - Doxygen 1.18 (winget) builds the docs; Gradle `doxygen` task writes to `build/doxygen` so tracked `Doxygen/html` isn't churned.
 
 ## Blockers / obsolete items for newer Java
-- **Applet API: resolved.** No longer blocks JDK 26+. Remaining javac warnings are plain deprecations (`new URL(String)`, `InputEvent.getModifiers`/`BUTTON*_MASK`) in `GraphPnl`; not removals, but worth modernising.
+- **Applet API: resolved.** No longer blocks JDK 26+. Deprecation warnings also cleaned up (build is warning-free with `-Xlint:deprecation -Xlint:removal`).
 - `GraphPnl extends java.awt.Panel` — works, but legacy AWT; fine for now.
 - No third-party libraries, so nothing to upgrade. README mentioned JUnit/Maven (`mvn eclipse:eclipse`) — no tests or pom exist.
 - `DeanFly.mainInit()` points at dead host `www.dean.seetech.com` when `GraphPnl.runlocal` is false (it is true by default).
