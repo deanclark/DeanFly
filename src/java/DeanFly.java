@@ -434,6 +434,11 @@ public class DeanFly extends JApplet implements ActionListener, ItemListener {
         int width = defaultWidth;
         int height = defaultHeight;
 
+        // optional first argument selects the world: islandWorld (default) or cubeWorld
+        if (argv.length > 0 && !argv[0].isEmpty()) {
+            worldName = argv[0];
+        }
+
         mainExecutionThread = Thread.currentThread();
         GraphPnl.relaxer = mainExecutionThread;
 

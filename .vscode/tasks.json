@@ -1,0 +1,9 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        { "label": "Gradle: build", "type": "shell", "command": "./gradlew build", "group": { "kind": "build", "isDefault": true }, "problemMatcher": "$javac" },
+        { "label": "Gradle: run islandWorld", "type": "shell", "command": "./gradlew run -Pworld=islandWorld", "problemMatcher": [] },
+        { "label": "Gradle: run cubeWorld", "type": "shell", "command": "./gradlew run -Pworld=cubeWorld", "problemMatcher": [] },
+        { "label": "Gradle: doxygen", "type": "shell", "command": "./gradlew doxygen", "problemMatcher": [] }
+    ]
+}

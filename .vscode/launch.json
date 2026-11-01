@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "DeanFly - islandWorld",
+            "request": "launch",
+            "mainClass": "DeanFly",
+            "args": "islandWorld",
+            "vmArgs": "-Xms1024m",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "java",
+            "name": "DeanFly - cubeWorld",
+            "request": "launch",
+            "mainClass": "DeanFly",
+            "args": "cubeWorld",
+            "vmArgs": "-Xms1024m",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

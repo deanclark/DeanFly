@@ -2,7 +2,7 @@ DeanFly
 ======================= 
 
 3D graphics educational rudimental flight simulator to illustrate concepts such as Clipping, Perspective, Hidden Surface Removal, Double Buffering etc.
-This is by no means a polished product and should be used only to demonstrate the some of the concepts used within 3D graphics programming.  This software was originally developed in C++ during a 3D Graphics module for a BSc Computing for Real-Time Systems degree and the University of the West of England UWE.  This Watcom C++ source was later ported to Java purely as a learning exercise.  Minor changes have been made since this was ported to enable compilation under java 1.7.
+This is by no means a polished product and should be used only to demonstrate the some of the concepts used within 3D graphics programming.  This software was originally developed in C++ during a 3D Graphics module for a BSc Computing for Real-Time Systems degree and the University of the West of England UWE.  This Watcom C++ source was later ported to Java purely as a learning exercise.  Minor changes have been made since this was ported to enable compilation under modern Java (now built with Gradle on JDK 25).
 
 View from Field 1: 
 !["Image of Field 1 from the ground"](https://github.com/deanclark/DeanFly/blob/master/Doxygen/Screenshot-DeanFly-Field1.png)
@@ -84,27 +84,41 @@ Wireframe View from Field 1:
 Running the application
 -----------
 
- 
+#### Requirements
+* JDK 17 or newer (built and tested with JDK 25; the Gradle toolchain is set to 25 in `build.gradle`)
+* Nothing else - the Gradle wrapper downloads Gradle 9.8.2 on first use. No external libraries are needed.
+* Optional: [Doxygen](https://www.doxygen.nl) (and Graphviz) to build the documentation
+
 #### To compile:
 
-*     ant
+*     ./gradlew build        (Windows: gradlew.bat build)
 
-#### To run:
-   
-   * export CLASSPATH=$CLASSPATH:DeanFly.jar
-   * or
-   * cd into folder containing DeanFly.class
+This produces `build/libs/DeanFly.jar`.
 
-   * java -Xms1024m DeanFly
+#### To run (must be run from the project root, the world data is loaded relative to it):
 
-    
+*     ./gradlew run                       (islandWorld, the default)
+*     ./gradlew run -Pworld=islandWorld
+*     ./gradlew run -Pworld=cubeWorld
 
-#### To rebuild Eclipse Project:
-*     mvn eclipse:clean eclipse:eclipse -DdownloadSources -Declipse:useProjectReferences=false -Dwtpversion=2.0
+Or directly with Java after building:
 
-#### JUnit
-* 	from within Eclipse right click the DeanFly project and Run As->JUnit Test
-	
-	
-#### Ant build of jar file
-*     ant createjar
+*     java -Xms1024m -cp build/classes/java/main DeanFly cubeWorld
+
+#### VS Code
+Open the folder in VS Code with the "Extension Pack for Java" installed. Use the **Run and Debug** panel
+("DeanFly - islandWorld" / "DeanFly - cubeWorld"), or **Terminal > Run Task** for the Gradle build, run and Doxygen tasks.
+
+#### Documentation (Doxygen)
+
+*     ./gradlew doxygen
+
+Output goes to `build/doxygen/html/index.html` (the checked-in `Doxygen/html` is left untouched).
+
+#### Eclipse / NetBeans
+The old Ant/NetBeans build has been removed. Import the project into Eclipse or NetBeans as a Gradle project.
+
+#### Java version notes
+The code compiles unchanged on JDK 25. `DeanFly` still extends `javax.swing.JApplet`, which is deprecated for removal
+and is expected to be removed from the JDK in version 26, so that class must be refactored before moving beyond JDK 25.
+See `CLAUDE.md` for details.

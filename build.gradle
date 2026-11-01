@@ -1,0 +1,60 @@
+plugins {
+    id 'application'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/java']
+    }
+}
+
+application {
+    mainClass = 'DeanFly'
+    applicationDefaultJvmArgs = ['-Xms1024m']
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:deprecation' << '-Xlint:removal'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'DeanFly'
+    }
+}
+
+// The world data (islandWorld, cubeWorld) is loaded relative to the working
+// directory, so run from the project root and pick the world with -Pworld=...
+tasks.named('run') {
+    workingDir = projectDir
+    args = [findProperty('world') ?: 'islandWorld']
+}
+
+// Generates the API documentation with Doxygen (must be on the PATH, Graphviz
+// 'dot' optional) into build/doxygen so the checked-in Doxygen/html is untouched.
+tasks.register('doxygen', Exec) {
+    group = 'documentation'
+    description = 'Builds the Doxygen documentation into build/doxygen'
+    def outDir = layout.buildDirectory.dir('doxygen').get().asFile
+    def outPath = outDir.absolutePath.replace(File.separator, '/')
+    workingDir = file('Doxygen')
+    inputs.dir('src/java')
+    inputs.files('Doxygen/lld.doxyfile', 'Doxygen/lld.dox')
+    outputs.dir(outDir)
+    doFirst {
+        outDir.mkdirs()
+        def cfg = file('Doxygen/lld.doxyfile').text +
+            "\nOUTPUT_DIRECTORY = ${outPath}\n" +
+            "WARN_LOGFILE = ${outPath}/warning.log\n" +
+            "GENERATE_RTF = NO\n"
+        standardInput = new ByteArrayInputStream(cfg.getBytes('UTF-8'))
+    }
+    commandLine 'doxygen', '-'
+}
