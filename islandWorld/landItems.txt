@@ -5,7 +5,7 @@ church.txt 0 0 6000 0 2
 runway.txt 2000 0 6000 0 1
 hanger.txt 1500 0 6500 0 1
 #hangerNew.dat 1400 0 6500 0 1
-#Apitts.dat 1400 100 6500 30 1
+Apitts.dat 1500 100 6500 10 1
 #cessna.obj 1600 50 6800 30 10
 #skyscraper.obj 2600 50 6800 30 20
 #tetrahedron.obj 2600 50 6800 0 50
